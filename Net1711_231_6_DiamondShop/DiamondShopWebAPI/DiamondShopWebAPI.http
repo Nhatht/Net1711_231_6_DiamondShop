@@ -1,0 +1,6 @@
+@DiamondShopWebAPI_HostAddress = http://localhost:5295
+
+GET {{DiamondShopWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,52 @@
+﻿@model DiamondShopData.Models.Product
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="form-group row">
+    <div class="col-md-6">
+        <label for="1">DiamondId</label>
+        @* @Html.HiddenFor(model => model.ID) *@
+        @Html.EditorFor(model => model.DiamondId, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+<div class="form-group row">
+
+    <div class="col-md-6">
+        <label for="1">Name</label>
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Description</label>
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Metal</label>
+        @Html.EditorFor(model => model.Metal, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Price</label>
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">ImageUrl</label>
+        @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Cost</label>
+        @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Stock</label>
+        @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Size</label>
+        @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+</div>
