@@ -60,7 +60,7 @@ namespace DiamondShopBusiness
             }
         }
         // create insert method
-        public async Task<IBusinessResult> Insert(ProductAddDTO productDto)
+        public async Task<IBusinessResult> Insert(ProductAddDTO productDto, string url)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace DiamondShopBusiness
                     Name = productDto.Name,
                     Description = productDto.Description,
                     Metal = productDto.Metal,
-                    ImageUrl = productDto.ImageUrl,
+                    ImageUrl = url,
                     Price = productDto.Price,
                     Cost = productDto.Cost,
                     Size = productDto.Size,
@@ -97,7 +97,8 @@ namespace DiamondShopBusiness
         }
 
 
-        public async Task<IBusinessResult> Update(int id, ProductUpdateDTO productDto)
+
+        public async Task<IBusinessResult> Update(int id, ProductUpdateDTO productDto, string url)
         {
             if (productDto == null)
             {
@@ -114,7 +115,7 @@ namespace DiamondShopBusiness
                 product.Name = productDto.Name;
                 product.Description = productDto.Description;
                 product.Metal = productDto.Metal;
-                product.ImageUrl = productDto.ImageUrl;
+                product.ImageUrl = url;
                 product.Price = productDto.Price;
                 product.Cost = productDto.Cost;
                 product.Size = productDto.Size;

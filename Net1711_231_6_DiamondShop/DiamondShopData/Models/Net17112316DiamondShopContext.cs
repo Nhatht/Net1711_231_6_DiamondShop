@@ -52,7 +52,7 @@ public partial class Net17112316DiamondShopContext : DbContext
 
             entity.ToTable("Company");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -70,7 +70,7 @@ public partial class Net17112316DiamondShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("customers_id_primary");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Address).HasMaxLength(255);
             entity.Property(e => e.Email).HasMaxLength(255);
             entity.Property(e => e.Gender).HasMaxLength(255);
@@ -88,7 +88,7 @@ public partial class Net17112316DiamondShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("diamonds_id_primary");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.CaratWeight).HasColumnType("decimal(8, 2)");
             entity.Property(e => e.Clarity).HasMaxLength(255);
             entity.Property(e => e.Color).HasMaxLength(255);
@@ -105,7 +105,7 @@ public partial class Net17112316DiamondShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("orders_id_primary");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Status).HasMaxLength(255);
 
             entity.HasOne(d => d.Customer).WithMany(p => p.OrderCustomers)
@@ -148,7 +148,7 @@ public partial class Net17112316DiamondShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("payments_id_primary");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Name).HasMaxLength(255);
         });
 
@@ -156,7 +156,7 @@ public partial class Net17112316DiamondShopContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("products_id_primary");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Id);
             entity.Property(e => e.Cost).HasColumnType("decimal(8, 2)");
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.ImageUrl).HasMaxLength(255);

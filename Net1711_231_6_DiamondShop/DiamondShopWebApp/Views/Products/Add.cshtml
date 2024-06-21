@@ -1,4 +1,4 @@
-﻿@model DiamondShopData.Models.Product
+﻿@model DiamondShopData.ViewModel.ProductDTO.ProductAddDTO
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
@@ -34,7 +34,7 @@
     </div>
     <div class="col-md-6">
         <label for="1">ImageUrl</label>
-        @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
+        <input type="file" class="form-control" name="ImageUrl" />
     </div>
     <div class="col-md-6">
         <label for="1">Cost</label>
