@@ -69,31 +69,64 @@
         $(document).ready(function () {
             loadData();
         });
-        function create() {
-            var data = {
-                DiamondId: $("#DiamondId").val(),
-                Name: $("#Name").val(),
-                Description: $("#Description").val(),
-                Metal: $("#Metal").val(),
-                Price: $("#Price").val(),
-                ImageUrl: $("#ImageUrl").val(),
-                Cost: $("#Cost").val(),
-                Stock: $("#Stock").val(),
-                Size: $("#Size").val(),
-            };
+        // function create() {
+        //     var data = {
+        //         DiamondId: $("#DiamondId").val(),
+        //         Name: $("#Name").val(),
+        //         Description: $("#Description").val(),
+        //         Metal: $("#Metal").val(),
+        //         Price: $("#Price").val(),
+        //         ImageUrl: $("#ImageUrl").val(),
+        //         Cost: $("#Cost").val(),
+        //         Stock: $("#Stock").val(),
+        //         Size: $("#Size").val(),
+        //     };
 
-            console.log(data);
+        //     console.log(data);
+
+        //     $.ajax({
+        //         type: 'POST',
+        //         url: '@Url.Action("Create", "Products")',
+        //         contentType: 'application/json;charset=utf-8',
+        //         dataType: "json",
+        //         data: JSON.stringify(data),
+        //         success: function (result) {
+        //             $('#topUpModal').modal('hide');
+        //             loadData();
+        //             alert("Created new product sucessfully!");
+        //         },
+        //         error: function (xhr, error) {
+        //             console.log(xhr);
+        //             alert(`Something went wrong!`);
+        //         }
+        //     });
+        // }
+        function create() {
+            var formData = new FormData();
+            formData.append("DiamondId", $("#DiamondId").val());
+            formData.append("Name", $("#Name").val());
+            formData.append("Description", $("#Description").val());
+            formData.append("Metal", $("#Metal").val());
+            formData.append("Price", $("#Price").val());
+            formData.append("Cost", $("#Cost").val());
+            formData.append("Stock", $("#Stock").val());
+            formData.append("Size", $("#Size").val());
+
+            var fileInput = document.querySelector('input[type="file"]');
+            if (fileInput.files.length > 0) {
+                formData.append("ImageUrl", fileInput.files[0]);
+            }
 
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Create", "Products")',
-                contentType: 'application/json;charset=utf-8',
-                dataType: "json",
-                data: JSON.stringify(data),
+                data: formData,
+                contentType: false,
+                processData: false,
                 success: function (result) {
-                    $('#topUpModal').modal('hide');
+                    $('#currencyModal').modal('hide');
                     loadData();
-                    alert("Created new product sucessfully!");
+                    alert("Created new product successfully!");
                 },
                 error: function (xhr, error) {
                     console.log(xhr);
@@ -195,35 +228,39 @@
             }
         }
         function update(id) {
-            var data = {
-                DiamondId: parseInt($("#DiamondId").val(), 10),
-                Name: $("#Name").val(),
-                Description: $("#Description").val(),
-                IsDeleted: $("#IsDeleted").is(":checked"),
-                Metal: $("#Metal").val(),
-                Price: parseFloat($("#Price").val()),
-                ImageUrl: $("#ImageUrl").val(),
-                Cost: parseFloat($("#Cost").val()),
-                Stock: parseInt($("#Stock").val(), 10),
-                Size: parseInt($("#Size").val(), 10),
-            };
+            var formData = new FormData();
+            formData.append("DiamondId", parseInt($("#DiamondId").val(), 10));
+            formData.append("Name", $("#Name").val());
+            formData.append("Description", $("#Description").val());
+            formData.append("IsDeleted", $("#IsDeleted").is(":checked"));
+            formData.append("Metal", $("#Metal").val());
+            formData.append("Price", parseFloat($("#Price").val()));
 
-            console.log(data); // Kiểm tra dữ liệu trước khi gửi
+            var imageUrl = $("#ImageUrl")[0].files[0];
+            if (imageUrl) {
+                formData.append("ImageUrl", imageUrl);
+            }
+
+            formData.append("Cost", parseFloat($("#Cost").val()));
+            formData.append("Stock", parseInt($("#Stock").val(), 10));
+            formData.append("Size", parseInt($("#Size").val(), 10));
+
+            console.log([...formData]); // Kiểm tra dữ liệu trước khi gửi
 
             $.ajax({
                 type: 'PUT',
                 url: '@Url.Action("Update", "Products")' + '/' + id,
-                contentType: 'application/json;charset=utf-8',
-                dataType: "json",
-                data: JSON.stringify(data),
+                contentType: false, // để FormData tự xử lý
+                processData: false, // để FormData tự xử lý
+                data: formData,
                 success: function (result) {
                     $('#topUpModal').modal('hide');
                     loadData();
-                    alert("Created new product sucessfully!");
+                    alert("Updated product successfully!");
                 },
                 error: function (xhr, error) {
                     console.log(xhr);
-                    alert(`Something went wrong!`);
+                    alert("Something went wrong!");
                 }
             });
         }

@@ -12,6 +12,7 @@ using DiamondShopBusiness;
 using Newtonsoft.Json;
 using DiamondShopData.ViewModel.ProductDTO;
 using System.Text;
+using System.Net.Http.Headers;
 
 
 namespace DiamondShopWebApp.Controllers
@@ -59,22 +60,66 @@ namespace DiamondShopWebApp.Controllers
         {
             return PartialView("Add", new ProductAddDTO());
         }
+        //[HttpPost]
+        //public async Task<Product> Create([FromForm] ProductAddDTO product)
+        //{
+        //    try
+        //    {
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            var json = JsonConvert.SerializeObject(product);
+        //            var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //            using (var response = await httpClient.PostAsync($"{apiUrl}", content))
+        //            {
+        //                if (response.IsSuccessStatusCode)
+        //                {
+        //                    var responseContent = await response.Content.ReadAsStringAsync();
+        //                    var createdBooking = JsonConvert.DeserializeObject<Product>(responseContent);
+        //                    return createdBooking;
+        //                }
+        //                else
+        //                {
+        //                    throw new Exception($"Request failed with status code: {response.StatusCode} and reason: {response.ReasonPhrase}");
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"Internal server error: {ex.Message}");
+        //    }
+        //}
         [HttpPost]
-        public async Task<Product> Create([FromForm] ProductAddDTO product)
+        public async Task<IActionResult> Create([FromForm] ProductAddDTO product)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var json = JsonConvert.SerializeObject(product);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(product.DiamondId.ToString()), nameof(product.DiamondId));
+                    content.Add(new StringContent(product.Name), nameof(product.Name));
+                    content.Add(new StringContent(product.Description), nameof(product.Description));
+                    content.Add(new StringContent(product.Metal), nameof(product.Metal));
+                    content.Add(new StringContent(product.Price.ToString()), nameof(product.Price));
+                    content.Add(new StringContent(product.Cost.ToString()), nameof(product.Cost));
+                    content.Add(new StringContent(product.Stock.ToString()), nameof(product.Stock));
+                    content.Add(new StringContent(product.Size.ToString()), nameof(product.Size));
+
+                    if (product.ImageUrl != null)
+                    {
+                        var fileContent = new StreamContent(product.ImageUrl.OpenReadStream());
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue(product.ImageUrl.ContentType);
+                        content.Add(fileContent, nameof(product.ImageUrl), product.ImageUrl.FileName);
+                    }
+
                     using (var response = await httpClient.PostAsync($"{apiUrl}", content))
                     {
                         if (response.IsSuccessStatusCode)
                         {
                             var responseContent = await response.Content.ReadAsStringAsync();
-                            var createdBooking = JsonConvert.DeserializeObject<Product>(responseContent);
-                            return createdBooking;
+                            var createdProduct = JsonConvert.DeserializeObject<Product>(responseContent);
+                            return Ok(createdProduct);
                         }
                         else
                         {
@@ -112,23 +157,67 @@ namespace DiamondShopWebApp.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-        [HttpPut]
-        public async Task<Product> Update(int id, [FromBody] ProductUpdateDTO product)
-        {
+        //[HttpPut]
+        //public async Task<Product> Update(int id, [FromBody] ProductUpdateDTO product)
+        //{
 
+        //    try
+        //    {
+        //        using (var httpClient = new HttpClient())
+        //        {
+        //            var json = JsonConvert.SerializeObject(product);
+        //            var content = new StringContent(json, Encoding.UTF8, "application/json");
+        //            using (var response = await httpClient.PutAsync($"{apiUrl}{id}", content))
+        //            {
+        //                if (response.IsSuccessStatusCode)
+        //                {
+        //                    var responseContent = await response.Content.ReadAsStringAsync();
+        //                    var updatedProduct = JsonConvert.DeserializeObject<Product>(responseContent);
+        //                    return updatedProduct;
+        //                }
+        //                else
+        //                {
+        //                    throw new Exception($"Request failed with status code: {response.StatusCode} and reason: {response.ReasonPhrase}");
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"Internal server error: {ex.Message}");
+        //    }
+        //}
+        [HttpPut]
+        public async Task<IActionResult> Update(int id, [FromForm] ProductUpdateDTO product)
+        {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    var json = JsonConvert.SerializeObject(product);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    var content = new MultipartFormDataContent();
+                    content.Add(new StringContent(product.DiamondId.ToString()), nameof(product.DiamondId));
+                    content.Add(new StringContent(product.Name), nameof(product.Name));
+                    content.Add(new StringContent(product.Description), nameof(product.Description));
+                    content.Add(new StringContent(product.Metal), nameof(product.Metal));
+                    content.Add(new StringContent(product.Price.ToString()), nameof(product.Price));
+                    content.Add(new StringContent(product.Cost.ToString()), nameof(product.Cost));
+                    content.Add(new StringContent(product.Stock.ToString()), nameof(product.Stock));
+                    content.Add(new StringContent(product.Size.ToString()), nameof(product.Size));
+
+                    if (product.ImageUrl != null)
+                    {
+                        var fileContent = new StreamContent(product.ImageUrl.OpenReadStream());
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue(product.ImageUrl.ContentType);
+                        content.Add(fileContent, nameof(product.ImageUrl), product.ImageUrl.FileName);
+                    }
+
                     using (var response = await httpClient.PutAsync($"{apiUrl}{id}", content))
                     {
                         if (response.IsSuccessStatusCode)
                         {
                             var responseContent = await response.Content.ReadAsStringAsync();
                             var updatedProduct = JsonConvert.DeserializeObject<Product>(responseContent);
-                            return updatedProduct;
+                            return Ok(updatedProduct);
                         }
                         else
                         {
@@ -142,7 +231,6 @@ namespace DiamondShopWebApp.Controllers
                 throw new Exception($"Internal server error: {ex.Message}");
             }
         }
-
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {

@@ -1,62 +1,52 @@
 ﻿@model DiamondShopData.ViewModel.ProductDTO.ProductUpdateDTO
-<link href="~/css/site.css" rel="stylesheet" />
 
-<div class="form-group row">
-    <div class="col-md-6">
-        <label for="1">DiamondId</label>
-        @Html.EditorFor(model => model.DiamondId, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.DiamondId, "", new { @class = "text-danger" })
+<form id="editProductForm" enctype="multipart/form-data">
+    <input type="hidden" id="DiamondId" name="DiamondId" value="@Model.DiamondId" />
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required />
     </div>
-    <div class="col-md-6">
-        <label for="1">Name</label>
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea class="form-control" id="Description" name="Description" required>@Model.Description</textarea>
     </div>
-</div>
-<div class="form-group row">
-    <div class="col-md-6">
-        <label for="1">Description</label>
-        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="Metal">Metal</label>
+        <input type="text" class="form-control" id="Metal" name="Metal" value="@Model.Metal" required />
     </div>
-    <div class="col-md-6">
-        <label for="IsDeleted">IsDeleted</label>
-        @Html.CheckBoxFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-check-input" } })
+
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" required />
     </div>
-</div>
-<div class="form-group row">
-    <div class="col-md-6">
-        <label for="1">Metal</label>
-        @Html.EditorFor(model => model.Metal, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Metal, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="Cost">Cost</label>
+        <input type="number" class="form-control" id="Cost" name="Cost" value="@Model.Cost" required />
     </div>
-    <div class="col-md-6">
-        <label for="1">Price</label>
-        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="Stock">Stock</label>
+        <input type="number" class="form-control" id="Stock" name="Stock" value="@Model.Stock" required />
     </div>
-</div>
-<div class="form-group row">
-    <div class="col-md-6">
-        <label for="1">ImageUrl</label>
-        @Html.EditorFor(model => model.ImageUrl, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="Size">Size</label>
+        <input type="number" class="form-control" id="Size" name="Size" value="@Model.Size" required />
     </div>
-    <div class="col-md-6">
-        <label for="1">Cost</label>
-        @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        <label for="ImageUrl">Image</label>
+        <input type="file" class="form-control" id="ImageUrl" name="ImageUrl" />
     </div>
-</div>
-<div class="form-group row">
-    <div class="col-md-6">
-        <label for="1">Stock</label>
-        @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="IsDeleted" name="IsDeleted" @(Model.IsDeleted ? "checked" : "") />
+        <label class="form-check-label" for="IsDeleted">Is Deleted</label>
     </div>
-    <div class="col-md-6">
-        <label for="1">Size</label>
-        @Html.EditorFor(model => model.Size, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
-    </div>
-</div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
