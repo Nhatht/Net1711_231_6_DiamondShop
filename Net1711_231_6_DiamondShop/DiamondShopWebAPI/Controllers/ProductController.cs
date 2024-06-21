@@ -13,6 +13,7 @@ namespace DiamondShopWebAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly ProductBusiness _business;
+        
         public ProductController()
         {
             _business = new ProductBusiness();
@@ -49,9 +50,36 @@ namespace DiamondShopWebAPI.Controllers
         }
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> Create([FromBody] ProductAddDTO product)
+        public async Task<IActionResult> Create([FromForm] ProductAddDTO product)
         {
-            var result = await _business.Insert(product);
+            string url = "";
+            if (product.ImageUrl != null)
+            {
+                string fileName = product.Name + Path.GetExtension(product.ImageUrl.FileName);
+                string filePath = @"wwwroot\ProductImage\" + fileName;
+
+                var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+
+                FileInfo file = new FileInfo(directoryLocation);
+
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+
+                using (var fileStream = new FileStream(directoryLocation, FileMode.Create))
+                {
+                    product.ImageUrl.CopyTo(fileStream);
+                }
+
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                url = baseUrl + "/ProductImage/" + fileName;
+            }
+            else
+            {
+                url = "https://placehold.co/600x400";
+            }
+            var result = await _business.Insert(product, url);
             if (result != null && result.Status > 0)
             {
                 return Ok(result.Data);
@@ -63,9 +91,32 @@ namespace DiamondShopWebAPI.Controllers
         }
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ProductUpdateDTO product)
+        public async Task<IActionResult> Update(int id, [FromForm] ProductUpdateDTO product)
         {
-            var result = await _business.Update(id, product);
+            string url = "";
+            if (product.ImageUrl != null)
+            {
+                string fileName = product.Name + Path.GetExtension(product.ImageUrl.FileName);
+                string filePath = @"wwwroot\ProductImage\" + fileName;
+
+                var directoryLocation = Path.Combine(Directory.GetCurrentDirectory(), filePath);
+
+                FileInfo file = new FileInfo(directoryLocation);
+
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+
+                using (var fileStream = new FileStream(directoryLocation, FileMode.Create))
+                {
+                    product.ImageUrl.CopyTo(fileStream);
+                }
+
+                var baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}{HttpContext.Request.PathBase.Value}";
+                url = baseUrl + "/ProductImage/" + fileName;
+            }
+            var result = await _business.Update(id, product,url);
             if (result != null && result.Status > 0)
             {
                 return Ok(result.Data);

@@ -57,10 +57,10 @@ namespace DiamondShopWebApp.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return PartialView("Add", new Product());
+            return PartialView("Add", new ProductAddDTO());
         }
         [HttpPost]
-        public async Task<Product> Create([FromBody] Product product)
+        public async Task<Product> Create([FromForm] ProductAddDTO product)
         {
             try
             {
