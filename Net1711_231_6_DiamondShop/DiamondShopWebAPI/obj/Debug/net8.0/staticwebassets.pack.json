@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\wwwroot\\ProductImage\\Dây Chuyền.png",
+      "PackagePath": "staticwebassets\\ProductImage\\Dây Chuyền.png"
+    },
+    {
+      "Id": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\wwwroot\\ProductImage\\asa.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\asa.jpg"
+    },
+    {
+      "Id": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\wwwroot\\ProductImage\\assa.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\assa.jpg"
+    },
+    {
+      "Id": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\wwwroot\\ProductImage\\assaas.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\assaas.jpg"
+    },
+    {
+      "Id": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\wwwroot\\ProductImage\\assas.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\assas.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.DiamondShopWebAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.DiamondShopWebAPI.props",
+      "PackagePath": "build\\DiamondShopWebAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.DiamondShopWebAPI.props",
+      "PackagePath": "buildMultiTargeting\\DiamondShopWebAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.DiamondShopWebAPI.props",
+      "PackagePath": "buildTransitive\\DiamondShopWebAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
