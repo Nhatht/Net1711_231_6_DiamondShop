@@ -115,7 +115,10 @@ namespace DiamondShopBusiness
                 product.Name = productDto.Name;
                 product.Description = productDto.Description;
                 product.Metal = productDto.Metal;
-                product.ImageUrl = url;
+                if(!string.IsNullOrEmpty(url))
+                {
+                    product.ImageUrl = url;
+                }
                 product.Price = productDto.Price;
                 product.Cost = productDto.Cost;
                 product.Size = productDto.Size;

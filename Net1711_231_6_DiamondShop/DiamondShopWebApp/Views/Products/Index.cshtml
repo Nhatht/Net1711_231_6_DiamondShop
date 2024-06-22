@@ -23,14 +23,14 @@
                     <th class="card-title text-center">Id</th>
                     <th class="card-title text-center">DiamondId</th>
                     <th class="card-title text-center">Name</th>
-                    <th class="card-title text-center">Description</th>
-                    <th class="card-title text-center">Metal</th>
                     <th class="card-title text-center">ImageUrl</th>
+                    <th class="card-title text-center">Description</th>
+@*                     <th class="card-title text-center">Metal</th>
                     <th class="card-title text-center">Price</th>
                     <th class="card-title text-center">Cost</th>
                     <th class="card-title text-center">Size</th>
                     <th class="card-title text-center">Stock</th>
-                    <th class="card-title text-center">IsDeleted</th>
+                    <th class="card-title text-center">IsDeleted</th> *@
                     <th class="card-title text-center"></th>
 
                 </tr>
@@ -146,17 +146,17 @@
                     var html = '';
                     $.each(result, function (key, item) {
                         html += '<tr>';
-                        html += '<td>' + item.id + '</td>';
-                        html += '<td>' + item.diamondId + '</td>';
-                        html += '<td>' + item.name + '</td>';
+                        html += '<td class="text-center">' + item.id + '</td>';
+                        html += '<td class="text-center">' + item.diamondId + '</td>';
+                        html += '<td class="text-center">' + item.name + '</td>';
+                        html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: auto;"/></td>';
                         html += '<td>' + item.description + '</td>';
-                        html += '<td>' + item.metal + '</td>';
-                        html += '<td><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: auto;"/></td>';
-                        html += '<td>' + item.price + '</td>';
-                        html += '<td>' + item.cost + '</td>';
-                        html += '<td>' + item.size + '</td>';
-                        html += '<td>' + item.stock + '</td>';
-                        html += '<td>' + item.isDeleted + '</td>';
+                        // html += '<td>' + item.metal + '</td>';
+                        // html += '<td>' + item.price + '</td>';
+                        // html += '<td>' + item.cost + '</td>';
+                        // html += '<td>' + item.size + '</td>';
+                        // html += '<td>' + item.stock + '</td>';
+                        // html += '<td>' + item.isDeleted + '</td>';
                         html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
                         html += '</tr>';
                     });
@@ -234,14 +234,14 @@
             formData.append("Description", $("#Description").val());
             formData.append("IsDeleted", $("#IsDeleted").is(":checked"));
             formData.append("Metal", $("#Metal").val());
-            formData.append("Price", parseFloat($("#Price").val()));
+            formData.append("Price", ($("#Price").val()));
 
             var imageUrl = $("#ImageUrl")[0].files[0];
             if (imageUrl) {
                 formData.append("ImageUrl", imageUrl);
             }
 
-            formData.append("Cost", parseFloat($("#Cost").val()));
+            formData.append("Cost", ($("#Cost").val()));
             formData.append("Stock", parseInt($("#Stock").val(), 10));
             formData.append("Size", parseInt($("#Size").val(), 10));
 
