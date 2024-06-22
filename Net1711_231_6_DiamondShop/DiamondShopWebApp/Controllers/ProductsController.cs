@@ -236,7 +236,7 @@ namespace DiamondShopWebApp.Controllers
         {
             try
             {
-                ProductUpdateDTO result = null;
+                ProductDTO result = null;
                 using (var httpClient = new HttpClient())
                 {
                     using (var response = await httpClient.GetAsync($"{apiUrl}{id}"))
@@ -244,7 +244,7 @@ namespace DiamondShopWebApp.Controllers
                         if (response.IsSuccessStatusCode)
                         {
                             var content = await response.Content.ReadAsStringAsync();
-                            result = JsonConvert.DeserializeObject<ProductUpdateDTO>(content);
+                            result = JsonConvert.DeserializeObject<ProductDTO>(content);
                         }
                     }
                 }

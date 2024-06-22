@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DiamondShopData.ViewModel.DiamondDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,8 @@ namespace DiamondShopData.ViewModel.ProductDTO
 
         public int Stock { get; set; }
 
-        public bool? IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public DiamondProductDTO Diamond { get; set; } = null!;
     }
 }

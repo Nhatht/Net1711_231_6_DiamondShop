@@ -1,4 +1,4 @@
-﻿@model DiamondShopData.ViewModel.ProductDTO.ProductUpdateDTO
+﻿@model DiamondShopData.ViewModel.ProductDTO.ProductDTO
 
 <form id="editProductForm" enctype="multipart/form-data">
     <input type="hidden" id="DiamondId" name="DiamondId" value="@Model.DiamondId" />
@@ -19,13 +19,13 @@
     </div>
 
     <div class="form-group">
-        <label for="Price">Price</label>
-        <input type="number" class="form-control" id="Price" name="Price" value="@Model.Price" required />
+        <label for="1">Price</label>
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
     </div>
 
     <div class="form-group">
-        <label for="Cost">Cost</label>
-        <input type="number" class="form-control" id="Cost" name="Cost" value="@Model.Cost" required />
+        <label for="1">Cost</label>
+        @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
     </div>
 
     <div class="form-group">
@@ -41,12 +41,13 @@
     <div class="form-group">
         <label for="ImageUrl">Image</label>
         <input type="file" class="form-control" id="ImageUrl" name="ImageUrl" />
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 100px;" />
+        }
     </div>
-
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="IsDeleted" name="IsDeleted" @(Model.IsDeleted ? "checked" : "") />
         <label class="form-check-label" for="IsDeleted">Is Deleted</label>
     </div>
-
-    <button type="submit" class="btn btn-primary">Update</button>
 </form>
