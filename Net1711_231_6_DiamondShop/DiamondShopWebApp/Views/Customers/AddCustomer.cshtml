@@ -1,0 +1,40 @@
+﻿@model DiamondShopData.ViewModel.CustomerDTO.CreateCustomerDTO
+<div class="form-group row">
+    <div class="col-md-6">
+        <label for="Username">Username</label>
+        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6"></div>
+</div>
+
+<div class="form-group row">
+    <div class="col-md-6">
+        <label for="Name">Name</label>
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="Password">Password</label>
+        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="Gender">Gender</label>
+        @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="Email">Email</label>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="PhoneNumber">PhoneNumber</label>
+        @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="Address">Address</label>
+        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+    </div> 
+    <div class="col-md-6">
+        <label for="Role">Role</label>
+        @Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+</div>
+

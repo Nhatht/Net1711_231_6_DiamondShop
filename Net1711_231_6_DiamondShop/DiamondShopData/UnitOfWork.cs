@@ -11,6 +11,7 @@ namespace DiamondShopData
     public class UnitOfWork
     {
         private ProductRepository _product;
+        private CustomerRepository _customer;
         private Net17112316DiamondShopContext _unitOfWorkContext;
         public UnitOfWork()
         {
@@ -22,6 +23,14 @@ namespace DiamondShopData
             get
             {
                 return _product ??= new ProductRepository(_unitOfWorkContext);
+            }
+        }
+        //Customer
+        public CustomerRepository CustomerRepository
+        {
+            get
+            {
+                return _customer ??= new CustomerRepository(_unitOfWorkContext);
             }
         }
 
