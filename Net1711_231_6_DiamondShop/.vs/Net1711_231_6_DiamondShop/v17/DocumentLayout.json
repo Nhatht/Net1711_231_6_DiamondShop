@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\",
+  "WorkspaceRootPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\",
   "Documents": [
     {
       "AbsoluteMoniker": "D:0:0:{6D25A238-DE61-4AEC-B9C9-FEAC098CAB0D}|DiamondShopWebApp\\DiamondShopWebApp.csproj|e:\\university\\fptu\\semester_8-su24\\prn231\\project\\net1711_231_6_diamondshop\\source\\net1711_231_6_diamondshop\\diamondshopwebapp\\views\\products\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -54,19 +54,19 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Bookmark",
@@ -155,10 +155,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
@@ -358,10 +354,6 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:5:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:9:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
@@ -374,11 +366,43 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+              "Name": "ST:4:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{588470cc-84f8-4a57-9ac4-86bca0625ff4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:9:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:10:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:5:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
             },
             {
               "$type": "Document",
@@ -410,10 +434,22 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Add.cshtml",
-              "DocumentMoniker": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\Add.cshtml",
+              "DocumentMoniker": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\Add.cshtml",
               "RelativeDocumentMoniker": "DiamondShopWebApp\\Views\\Products\\Add.cshtml",
-              "ToolTip": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\Add.cshtml",
+              "ToolTip": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\Add.cshtml",
               "RelativeToolTip": "DiamondShopWebApp\\Views\\Products\\Add.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB8AAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-06-20T16:33:41.63Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MapperConfig.cs",
+              "DocumentMoniker": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\MapperConfig.cs",
+              "RelativeDocumentMoniker": "DiamondShopBusiness\\MapperConfig.cs",
+              "ToolTip": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\MapperConfig.cs",
+              "RelativeToolTip": "DiamondShopBusiness\\MapperConfig.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-06-23T18:11:51.03Z",
@@ -436,9 +472,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "View.cshtml",
-              "DocumentMoniker": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\View.cshtml",
+              "DocumentMoniker": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\View.cshtml",
               "RelativeDocumentMoniker": "DiamondShopWebApp\\Views\\Products\\View.cshtml",
-              "ToolTip": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\View.cshtml",
+              "ToolTip": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebApp\\Views\\Products\\View.cshtml",
               "RelativeToolTip": "DiamondShopWebApp\\Views\\Products\\View.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
@@ -518,15 +554,7 @@
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:7:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
             },
             {
               "$type": "Bookmark",
@@ -575,6 +603,10 @@
             {
               "$type": "Bookmark",
               "Name": "ST:13:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:7:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
             },
             {
               "$type": "Bookmark",
