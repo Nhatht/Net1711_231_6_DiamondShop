@@ -1,20 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj": {}
+    "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj": {}
   },
   "projects": {
-    "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj": {
+    "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj",
+        "projectUniqueName": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj",
         "projectName": "DiamondCommon",
-        "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\obj\\",
+        "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj",
+        "packagesPath": "C:\\Users\\nhath\\.nuget\\packages\\",
+        "outputPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhath\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +28,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -61,21 +68,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj": {
+    "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj",
+        "projectUniqueName": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj",
         "projectName": "DiamondShopBusiness",
-        "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\obj\\",
+        "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj",
+        "packagesPath": "C:\\Users\\nhath\\.nuget\\packages\\",
+        "outputPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhath\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -83,6 +96,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -90,11 +104,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj": {
-                "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj"
+              "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj": {
+                "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondCommon\\DiamondCommon.csproj"
               },
-              "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj": {
-                "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj"
+              "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj": {
+                "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj"
               }
             }
           }
@@ -135,21 +149,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj": {
+    "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj",
+        "projectUniqueName": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj",
         "projectName": "DiamondShopData",
-        "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopData\\obj\\",
+        "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\DiamondShopData.csproj",
+        "packagesPath": "C:\\Users\\nhath\\.nuget\\packages\\",
+        "outputPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopData\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhath\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -157,6 +177,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -230,21 +251,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj": {
+    "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj",
+        "projectUniqueName": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj",
         "projectName": "DiamondShopWebAPI",
-        "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\obj\\",
+        "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\DiamondShopWebAPI.csproj",
+        "packagesPath": "C:\\Users\\nhath\\.nuget\\packages\\",
+        "outputPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopWebAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nhath\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -252,6 +279,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
@@ -259,8 +287,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj": {
-                "projectPath": "D:\\C#\\PRN231\\Net1711_231_6_DiamondShop\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj"
+              "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj": {
+                "projectPath": "E:\\University\\FPTU\\Semester_8-SU24\\PRN231\\project\\Net1711_231_6_DiamondShop\\Source\\Net1711_231_6_DiamondShop\\DiamondShopBusiness\\DiamondShopBusiness.csproj"
               }
             }
           }
@@ -308,7 +336,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
