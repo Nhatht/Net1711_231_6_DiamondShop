@@ -1,0 +1,239 @@
+﻿@model IEnumerable<DiamondShopData.Models.Customer>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="display-8">TopUp List</h3>
+    </div>
+    <div class="col-md-2 text-end">
+        <button type="button" class="btn btn-primary" onclick="add();">
+            Add
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr class="card-header">
+                    <th class="card-title text-center">ID</th>
+                    <th class="card-title text-center">Username</th>
+                    <th class="card-title text-center">Name</th>
+                    <th class="card-title text-center">Gender</th>
+                    <th class="card-title text-center">Email</th>
+                    <th class="card-title text-center">Phonenumber</th>
+                    <th class="card-title text-center">Address</th>
+                    <th class="card-title text-center">Role</th>
+                    <th class="card-title text-center">IsDeleted</th>
+
+                    <th class="card-title text-center"></th>
+                </tr>
+            </thead>
+            <tbody class="tblCustomer">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="topUpModal" tabindex="-1" aria-labelledby="topUpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "frm", id = "frm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="topUpModalLabel">TopUp Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="topUpModalContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btSave" type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            loadData();
+
+            $("#btSave").click(function () {
+                var formData = new FormData();
+                formData.append("Username", $("#Username").val());
+                formData.append("Name", $("#Name").val());
+                formData.append("Password", $("#Password").val());
+                formData.append("Gender", $("#Gender").val());
+                formData.append("Email", $("#Email").val());
+                formData.append("PhoneNumber", $("#PhoneNumber").val());
+                formData.append("Address", $("#Address").val());
+                formData.append("Role", $("#Role").val());
+
+                console.log(formData);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create", "Customers")',
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (result) {
+                        //console.log(result);
+
+                        if (result.status >= 1) {
+                            $('#topUpModal').modal('hide');
+                            loadData();
+                        }
+                        alert(result.message);
+                    },
+                    error: function (xhr, error) {
+                        //alert(xhr.responseText);
+                        console.log(xhr);
+                    }
+                });
+            });
+
+            ////////
+        });
+
+        function loadData() {
+            $.ajax({
+                url: '@Url.Action("GetAll", "Customers")',
+                type: "GET",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = '';
+                    $.each(result, function (key, item) {
+                        //console.log(item);
+                        html += '<tr>';
+                        html += '<td>' + item.id + '</td>';
+                        html += '<td>' + item.username + '</td>';
+                        html += '<td>' + item.name + '</td>';
+                        html += '<td>' + item.gender + '</td>';
+                        html += '<td>' + item.email + '</td>';
+                        html += '<td>' + item.phoneNumber + '</td>';
+                        html += '<td>' + item.address + '</td>';
+                        html += '<td>' + item.role + '</td>';
+                        html += '<td>' + item.isDeleted + '</td>';
+                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+                        html += '</tr>';
+                    });
+                    $('.tblCustomer').html(html);
+                },
+                error: function (xhr, error) {
+                    alert(xhr.statusText);
+                }
+            });
+        }
+
+        function add() {
+            $("#topUpModalContent").html("");
+            $("#topUpModalLabel").html("Add New");
+
+            $.ajax({
+                url: '@Url.Action("Add", "Customers")',
+                type: "GET",
+                success: function (result) {
+                    $("#topUpModalContent").html(result);
+                    $('#topUpModal').modal('show');
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
+
+        function edit(id) {
+            $("#topUpModalContent").html("");
+            $("#topUpModalLabel").html(`Edit Customer [${id}]`);
+            $.ajax({
+                url: '@Url.Action("Edit", "Customers")' + '/' + id,
+                type: "GET",
+                success: function (result) {
+                    $("#topUpModalContent").html(result);
+                    $('#topUpModal').modal('show');
+
+                    $("#btSave").off("click").on("click", function () {
+                        update(id);
+                    });
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
+
+        function delele(id) {
+            var result = confirm("Are you sure to delete?");
+            if (result) {
+                //alert(id);
+                var formData = new FormData();
+                formData.append("id", id);
+
+                $.ajax({
+                    url: '@Url.Action("Delete", "Customers")',
+                    type: "DELETE",
+                    //contentType: 'application/json;charset=utf-8',
+                    //dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (result) {
+                        if (result.status >= 1) {
+                            $('#topUpModal').modal('hide');
+                            loadData();
+                        }
+                        alert(result.message);
+                    },
+                    error: function (message) {
+                        alert(message);
+                    }
+                });
+            }
+        }
+        function update(id) {
+            var data = {
+                Id: parseInt($("#Id").val(), 10),
+                Username: $("#Username").val(),
+                Name: $("#Name").val(),
+                Password: $("#Password").val(),
+                Gender: $("#Gender").val(),
+                Email: $("#Email").val(),
+                PhoneNumber: $("#PhoneNumber").val(),
+                Address: $("#Address").val(),
+                Role: $("#Role").val(),
+                IsDeleted: $("#IsDeleted").prop("checked")
+            };
+
+            console.log(data); // Kiểm tra dữ liệu trước khi gửi
+
+            $.ajax({
+                type: 'PUT',
+                url: '@Url.Action("Update", "Customers")' + '/' + id,
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    $('#topUpModal').modal('hide');
+                    loadData();
+                    alert("Update sucessfully!");
+                },
+                error: function (xhr, error) {
+                    console.log(xhr);
+                    alert("Something went wrong!");
+                }
+            });
+        }
+
+    </script>
+}
