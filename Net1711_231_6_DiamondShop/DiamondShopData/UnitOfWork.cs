@@ -12,7 +12,8 @@ namespace DiamondShopData
     {
         private ProductRepository _product;
         private CustomerRepository _customer;
-        private Net17112316DiamondShopContext _unitOfWorkContext;
+        private CompanyRepository _company;
+		private Net17112316DiamondShopContext _unitOfWorkContext;
         public UnitOfWork()
         {
             _unitOfWorkContext ??= new Net17112316DiamondShopContext();
@@ -34,5 +35,13 @@ namespace DiamondShopData
             }
         }
 
-    }
+		public CompanyRepository CompanyRepository
+		{
+			get
+			{
+				return _company ??= new CompanyRepository(_unitOfWorkContext);
+			}
+		}
+
+	}
 }
