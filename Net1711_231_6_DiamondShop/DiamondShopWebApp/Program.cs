@@ -2,7 +2,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(cfg => {                    
+    cfg.Cookie.Name = "DiamondShop";            
+    cfg.IdleTimeout = new TimeSpan(0, 30, 0);    
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,7 +20,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseSession();
 app.UseRouting();
 
 app.UseAuthorization();
