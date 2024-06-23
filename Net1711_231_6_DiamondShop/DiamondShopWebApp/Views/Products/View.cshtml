@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model DiamondShopData.ViewModel.ProductDTO.ProductDTO
+
+<div class="form-group">
+    <label for="DiamondId">Diamond Id</label>
+    <input type="text" class="form-control" id="DiamondId" name="DiamondId" value="@Model.DiamondId" readonly />
+</div>
+
+<div class="form-group">
+    <label for="Name">Name</label>
+    <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" readonly="true" />
+</div>
+
+<div class="form-group">
+    <label for="Description">Description</label>
+    <textarea class="form-control" id="Description" name="Description" readonly>@Model.Description</textarea>
+</div>
+
+<div class="form-group">
+    <label for="Metal">Metal</label>
+    <input type="text" class="form-control" id="Metal" name="Metal" value="@Model.Metal" readonly />
+</div>
+
+<div class="form-group">
+    <label for="Price">Price</label>
+    <input type="text" class="form-control" id="Price" name="Price" value="@Model.Price" readonly />
+</div>
+
+<div class="form-group">
+    <label for="Cost">Cost</label>
+    <input type="text" class="form-control" id="Cost" name="Cost" value="@Model.Cost" readonly />
+</div>
+
+<div class="form-group">
+    <label for="Stock">Stock</label>
+    <input type="number" class="form-control" id="Stock" name="Stock" value="@Model.Stock" readonly />
+</div>
+
+<div class="form-group">
+    <label for="Size">Size</label>
+    <input type="number" class="form-control" id="Size" name="Size" value="@Model.Size" readonly />
+</div>
+
+<div class="form-group">
+    <label for="ImageUrl">Image</label>
+    <input type="text" class="form-control" id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl" readonly />
+    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+    {
+        <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 100px;" />
+    }
+</div>
+
+<div class="form-group">
+    <label for="Status">Status</label>
+    <input type="text" class="form-control" id="Status" name="Status" value="@(Model.IsDeleted ? "Inactive" : "Active")" readonly />
+</div>
