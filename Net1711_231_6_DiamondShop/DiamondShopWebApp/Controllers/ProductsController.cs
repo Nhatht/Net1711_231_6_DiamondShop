@@ -13,6 +13,11 @@ using Newtonsoft.Json;
 using DiamondShopData.ViewModel.ProductDTO;
 using System.Text;
 using System.Net.Http.Headers;
+using System.Net;
+using DiamondShopWebApp.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Reflection.Metadata;
+using DiamondShopData.ViewModel;
 
 
 namespace DiamondShopWebApp.Controllers
@@ -21,8 +26,10 @@ namespace DiamondShopWebApp.Controllers
     {
         private readonly Net17112316DiamondShopContext _context;
         //private readonly UnitOfWork _unitOfWork;
+        public const string CARTKEY = "cart";
         private readonly ProductBusiness _productBusiness;
         private string apiUrl = "https://localhost:7056/api/Product/";
+        private string apiOrder = "https://localhost:7056/api/Order";
         public ProductsController()
         {
 
@@ -255,6 +262,122 @@ namespace DiamondShopWebApp.Controllers
             {
                 throw new Exception(ex.Message);
             }
+        }
+        [HttpPost]
+        public async Task<ActionResult> AddToCart(int productId)
+        {
+            ProductDTO result = null;
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync($"{apiUrl}{productId}"))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var content = await response.Content.ReadAsStringAsync();
+                            result = JsonConvert.DeserializeObject<ProductDTO>(content);
+                        }
+                    }
+                }
+            
+            var cart = GetCartItems();
+            var cartItem = cart.Find(p => p.product.Id == productId);
+            if (cartItem != null)
+            {
+                cartItem.quantity++;
+            }
+            else
+            {
+                cart.Add(new CartItem() {quantity = 1, product = result });
+            }
+            SaveCartSession(cart);
+
+            return RedirectToAction(nameof(Cart));
+        }
+        /// xóa item trong cart
+        [Route("/removecart/{productid:int}", Name = "removecart")]
+        public IActionResult RemoveCart([FromRoute] int productid)
+        {
+
+            var cart = GetCartItems();
+            var cartitem = cart.Find(p => p.product.Id == productid);
+            if (cartitem != null)
+            {
+                cart.Remove(cartitem);
+            }
+
+            SaveCartSession(cart);
+            return RedirectToAction(nameof(Cart));
+        }
+
+        /// Cập nhật
+        [Route("/updatecart", Name = "updatecart")]
+        [HttpPost]
+        public IActionResult UpdateCart([FromForm] int productid, [FromForm] int quantity)
+        {
+            var cart = GetCartItems();
+            var cartitem = cart.Find(p => p.product.Id == productid);
+            if (cartitem != null)
+            {
+                cartitem.quantity = quantity;
+            }
+            SaveCartSession(cart);
+            return Ok();
+        }
+
+
+        // Hiện thị giỏ hàng
+        [Route("/cart", Name = "cart")]
+        public IActionResult Cart()
+        {
+            return View(GetCartItems());
+        }
+
+        [Route("/checkout")]
+        public  async Task<IActionResult> CheckOut(List<ProductsDTO> cartItems)
+        {
+            using (var client = new HttpClient())
+            {
+
+                var orderJson = JsonConvert.SerializeObject(cartItems);
+                var content = new StringContent(orderJson, Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"{apiOrder}", content);
+                var responseBody = await response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    ClearCart();
+                    return RedirectToAction("Index", "Order");
+                }
+                else
+                {
+                    return BadRequest(responseBody);
+                }
+            }
+        }
+        List<CartItem> GetCartItems()
+        {
+
+            var session = HttpContext.Session;
+            string jsoncart = session.GetString(CARTKEY);
+            if (jsoncart != null)
+            {
+                return JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+            }
+            return new List<CartItem>();
+        }
+
+        // Xóa cart khỏi session
+        void ClearCart()
+        {
+            var session = HttpContext.Session;
+            session.Remove(CARTKEY);
+        }
+
+        // Lưu Cart (Danh sách CartItem) vào session
+        void SaveCartSession(List<CartItem> ls)
+        {
+            var session = HttpContext.Session;
+            string jsoncart = JsonConvert.SerializeObject(ls);
+            session.SetString(CARTKEY, jsoncart);
         }
     }
 }

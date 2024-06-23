@@ -1,0 +1,67 @@
+﻿@model DiamondShopData.Models.Order
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Order Detail</h1>
+
+<p>
+    @ViewBag.StringJSON
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SaleStaffId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DeliveryStaffId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            @Html.DisplayFor(model => model.Id)
+        </td>
+        <th>
+            @Html.DisplayFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.SaleStaffId)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.DeliveryStaffId)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.TotalPrice)
+        </th>
+        <th>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </th>
+    </tr>
+    </tbody>
+</table>
+<div>
+        <a asp-action="Index">Back to List</a>
+</div>
