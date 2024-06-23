@@ -157,7 +157,7 @@
                         // html += '<td>' + item.size + '</td>';
                         // html += '<td>' + item.stock + '</td>';
                         // html += '<td>' + item.isDeleted + '</td>';
-                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
                         html += '</tr>';
                     });
                     $('.tblProduct').html(html);
@@ -206,7 +206,21 @@
                 }
             });
         }
-
+        function view(id) {
+            $("#currencyModalContent").html("");
+            $("#currencyModalLabel").html(`Edit Product [${id}]`);
+            $.ajax({
+                url: '@Url.Action("Edit", "Products")' + '/' + id,
+                type: "GET",
+                success: function (result) {
+                    $("#currencyModalContent").html(result);
+                    $('#currencyModal').modal('show');
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
         function delele(id) {
             var result = confirm(`Are you sure to delete product [${id}]?`);
             if (result) {
