@@ -23,7 +23,7 @@ public partial class Customer
 
     public string Role { get; set; } = null!;
 
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
     public virtual ICollection<Order> OrderCustomers { get; set; } = new List<Order>();
 
