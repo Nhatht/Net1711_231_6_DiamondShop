@@ -1,0 +1,248 @@
+﻿@model IEnumerable<DiamondShopData.Models.Diamond>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="row">
+    <div class="col-md-10">
+        <h3 class="display-8">TopUp List</h3>
+    </div>
+    <div class="col-md-2 text-end">
+        <button type="button" class="btn btn-primary" onclick="add();">
+            Add
+        </button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr class="card-header">
+                    <th class="card-title text-center">id</th>
+                    <th class="card-title text-center">Name</th>
+                    <th class="card-title text-center">Origin</th>
+                    <th class="card-title text-center">CaratWeight</th>
+                    <th class="card-title text-center">Color</th>
+                    <th class="card-title text-center">Clarity</th>
+                    <th class="card-title text-center">Cut</th>
+                    <th class="card-title text-center">CertificateNumber</th>
+                    <th class="card-title text-center">Price</th>
+                    <th class="card-title text-center">isDeleted</th>
+                    <th class="card-title text-center"></th>
+                </tr>
+            </thead>
+            <tbody class="tblDiamonds">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="diamondModal" tabindex="-1" aria-labelledby="diamondModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { name = "frm", id = "frm" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title" id="diamondModalLabel">TopUp Transaction</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="diamondModalContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btSave" type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+                $(document).ready(function () {
+                    loadData();
+
+                    $("#btSave").click(function () {
+                var formData = new FormData();
+                formData.append("Id", $("#Id").val()); // ID tự tăng trong database, giá trị này có thể để trống hoặc bỏ qua khi tạo mới
+                formData.append("Name", $("#Name").val());
+                formData.append("Origin", $("#Origin").val());
+                formData.append("CaratWeight", $("#CaratWeight").val());
+                formData.append("Color", $("#Color").val());
+                formData.append("Clarity", $("#Clarity").val());
+                formData.append("Cut", $("#Cut").val());
+                formData.append("CertificateNumber", $("#CertificateNumber").val());
+                formData.append("Price", $("#Price").val());
+                formData.append("IsDeleted", $("#IsDeleted").is(":checked"));
+        console.log(formData);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '@Url.Action("AddDiamond", "Diamonds")',
+                            //contentType: 'application/json;charset=utf-8',
+                            //dataType: "json",
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (result) {
+                                console.log(result);
+
+                                if (result.status >= 1) {
+                                    $('#diamondModal').modal('hide');
+                                    loadData();
+                                }
+                                alert(result.message);
+                            },
+                            error: function (xhr, error) {
+                                //alert(xhr.responseText);
+                                console.log(xhr);
+                            }
+                        });
+                    });
+
+                    ////////
+                });
+
+                function loadData() {
+                    $.ajax({
+                        url: '@Url.Action("GetAll", "Diamonds")',
+                        type: "GET",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            var html = '';
+                            $.each(result, function (key, item) {
+                                //console.log(item);
+                                html += '<tr>';
+                                html += '<td>' + item.id + '</td>';
+
+                        html += '<td>' + item.name + '</td>';
+                                html += '<td>' + item.origin + '</td>';
+                        html += '<td>' + item.caratWeight + '</td>';
+                        html += '<td>' + item.color + '</td>';
+                        html += '<td>' + item.clarity + '</td>';
+                        html += '<td class="text-end">' + item.cut + '</td>';
+                        html += '<td class="text-end">' + item.certificateNumber + '</td>';
+                        html += '<td class="text-end">' + item.price + '</td>';
+                        html += '<td class="text-end">' + item.isDeleted + '</td>';
+                                html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+                                html += '</tr>';
+                            });
+                            $('.tblDiamonds').html(html);
+                        },
+                        error: function (xhr, error) {
+                            alert(xhr.statusText);
+                        }
+                    });
+                }
+
+        function add() {
+            $("#diamondModalContent").html("");
+            $("#diamondModalLabel").html("Add New");
+
+            $.ajax({
+                url: '@Url.Action("Add", "Diamonds")',
+                type: "GET",
+                success: function (result) {
+                    $("#diamondModalContent").html(result);
+                    $('#diamondModal').modal('show');
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
+
+        function edit(id) {
+            $("#diamondModalContent").html("");
+            $("#diamondModalLabel").html(`Edit Diamonds [${id}]`);
+            $.ajax({
+                url: '@Url.Action("Edit", "Diamonds")' + '/' + id,
+                type: "GET",
+                success: function (result) {
+                    $("#diamondModalContent").html(result);
+                    $('#diamondModal').modal('show');
+
+                    $("#btSave").off("click").on("click", function () {
+                        update(id);
+                    });
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
+        function update(id) {
+            var data = {
+                Id: parseInt($("#Id").val(), 10),
+                Name: $("#Name").val(),
+                Origin: $("#Origin").val(),
+                CaratWeight: parseFloat($("#CaratWeight").val()), // Sửa lại cho phù hợp
+                Color: $("#Color").val(),
+                Price: parseFloat($("#Price").val()),
+                Clarity: $("#Clarity").val(),
+                Cut: $("#Cut").val(),
+                CertificateNumber: parseInt($("#CertificateNumber").val(), 10),
+                IsDeleted: $("#IsDeleted").is(":checked"),
+            };
+
+            console.log(data); // Kiểm tra dữ liệu trước khi gửi
+
+            $.ajax({
+                type: 'PUT',
+                url: '@Url.Action("Update", "Diamonds")' + '/' + id,
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    $('#diamondModal').modal('hide');
+                    loadData();
+                    alert("Update product sucessfully!");
+                },
+                error: function (xhr, error) {
+                    console.log(xhr);
+                    alert(`Something went wrong!`);
+                }
+            });
+        }
+
+        
+
+
+                function delele(id) {
+                    var result = confirm("Are you sure to delete?");
+                    if (result) {
+                        //alert(id);
+                        var formData = new FormData();
+                        formData.append("id", id);
+
+                        $.ajax({
+                            url: '@Url.Action("Delete", "Diamonds")',
+                            type: "POST",
+                            //contentType: 'application/json;charset=utf-8',
+                            //dataType: "json",
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            success: function (result) {
+                                if (result.status >= 1) {
+                                    $('#diamondModal').modal('hide');
+                                    loadData();
+                                }
+                                alert(result.message);
+                            },
+                            error: function (message) {
+                                alert(message);
+                            }
+                        });
+                    }
+                }
+
+    </script>
+}
