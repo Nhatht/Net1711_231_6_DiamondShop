@@ -21,9 +21,9 @@ namespace DiamondShopWebAPI.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(string? query = null)
         {
-            var result = await _business.GetAll();
+            var result = await _business.GetAll(query);
             if (result != null && result.Status > 0)
             {
                 return Ok(result.Data);

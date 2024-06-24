@@ -21,11 +21,11 @@ namespace DiamondShopBusiness
             //_unitOfWork.ProductRepository = new ProductDAO();
             _unitOfWork ??= new UnitOfWork();
         }
-        public async Task<IBusinessResult> GetAll()
+        public async Task<IBusinessResult> GetAll(string? query = null)
         {
             try
             {
-                var currencies = await _unitOfWork.ProductRepository.GetAllAsync();
+                var currencies = await _unitOfWork.ProductRepository.GetAllAsync(query);
                 if (currencies == null)
                 {
                     return new BusinessResult(-1, "No data found");

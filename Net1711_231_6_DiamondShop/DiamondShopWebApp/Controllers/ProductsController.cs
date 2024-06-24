@@ -39,14 +39,19 @@ namespace DiamondShopWebApp.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<List<Product>> GetAll()
+        public async Task<List<Product>> GetAll(string? query = null)
         {
             try
             {
                 var result = new List<Product>();
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync(apiUrl + "GetAll"))
+                    string apiEndpoint = apiUrl + "GetAll";
+                    if (!string.IsNullOrEmpty(query))
+                    {
+                        apiEndpoint += $"?query={Uri.EscapeDataString(query)}";
+                    }
+                    using (var response = await httpClient.GetAsync(apiEndpoint))
                     {
                         if (response.IsSuccessStatusCode)
                         {
