@@ -1,0 +1,52 @@
+﻿@model DiamondShopData.ViewModel.DiamondDTO.DiamondDTO
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="form-group row">
+    <div class="col-md-6">
+        <label for="1">Name</label>
+        @* @Html.HiddenFor(model => model.ID) *@
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-md-6">
+        <label for="1">Origin</label>
+        @Html.EditorFor(model => model.Origin, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">CaratWeight</label>
+        @Html.EditorFor(model => model.CaratWeight, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Color</label>
+        @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Clarity</label>
+        @Html.EditorFor(model => model.Clarity, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Cut</label>
+        @Html.EditorFor(model => model.Cut, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">CertificateNumber</label>
+        @Html.EditorFor(model => model.CertificateNumber, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">Price</label>
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-md-6">
+        <label for="1">IsDeleted</label>
+        @Html.CheckBoxFor(model => model.IsDeleted, new { htmlAttributes = new { @class = "form-check-input" } })
+    </div>
+    <div class="col-md-6">
+    </div>
+</div>
