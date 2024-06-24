@@ -43,7 +43,7 @@ namespace DiamondShopData.Repository
                     }
                     if (!string.IsNullOrEmpty(metalFilter))
                     {
-                        queryable = queryable.Where(BuildPredicate("Metal", metalFilter));
+                        queryable = queryable.Where(BuildPredicate("Description", metalFilter));
                     }
                 }
             }
