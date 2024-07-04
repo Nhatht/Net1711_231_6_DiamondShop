@@ -47,6 +47,25 @@
     </div>
 </div>
 
+@* <div class="row">
+    <div class="col-md-12 text-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous" onclick="prevPage()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next" onclick="nextPage()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div> *@
+
 <div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -69,23 +88,26 @@
     </div>
 </div>
 
+<nav id="paginationControls" aria-label="Page navigation" style="display: flex; justify-content: center; column-gap: 12px;">
+</nav>
+
 
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
             loadData();
         });
-        function loadData(query = '') {
+        function loadData(pageNumber = 1, pageSize = 2, query = '') {
             $('#btn-close').click();
             $.ajax({
                 url: '@Url.Action("GetAll", "Products")',
                 type: "GET",
-                data: { query: query },
+                data: { pageNumber: pageNumber, pageSize: pageSize, query: query },
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     var html = '';
-                    $.each(result, function (key, item) {
+                    $.each(result.list, function (key, item) {
                         html += '<tr>';
                         html += '<td class="text-center">' + item.id + '</td>';
                         html += '<td class="text-center">' + item.diamondId + '</td>';
@@ -98,6 +120,7 @@
                         html += '</tr>';
                     });
                     $('.tblProduct').html(html);
+                    generatePagination(result.pageNumber, result.totalOfPages);
                 },
                 error: function (xhr, error) {
                     alert(xhr.statusText);
@@ -107,8 +130,37 @@
 
         function search() {
             var query = $('#searchQuery').val();
-            loadData(query);
+            loadData(1, 10, query);
         }
+
+        function generatePagination(currentPage, totalPages) {
+            var paginationHtml = '';
+
+            if (currentPage > 1) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ')">Prev</button>';
+            }
+            else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
+            }
+
+            for (var i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHtml += '<button class="btn btn-info">' + i + '</button>';
+                } else {
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ')">' + i + '</button>';
+                }
+            }
+
+            if (currentPage < totalPages) {
+                paginationHtml += '<button class="btn btn-outline-secondary"  onclick="loadData(' + (currentPage + 1) + ')">Next</button>';
+            }
+            else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
+            }
+
+            $('#paginationControls').html(paginationHtml);
+        }
+
         // function create() {
         //     var data = {
         //         DiamondId: $("#DiamondId").val(),
