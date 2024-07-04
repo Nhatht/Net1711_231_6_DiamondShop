@@ -28,22 +28,30 @@ namespace DiamondShopData.Repository
                 var filters = query.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 if (filters.Length != 0)
                 {
-                    var nameFilter = filters.Length > 0 ? filters[0].Trim() : null;
-                    var priceFilter = filters.Length > 1 ? filters[1].Trim() : null;
-                    var metalFilter = filters.Length > 2 ? filters[2].Trim() : null;
+                    var metalValues = await _context.Set<Product>().Select(p => p.Metal).Distinct().ToListAsync();
 
-                    // Apply filters dynamically
-                    if (!string.IsNullOrEmpty(nameFilter))
+                    foreach (var filter in filters)
                     {
-                        queryable = queryable.Where(BuildPredicate("Name", nameFilter));
-                    }
-                    if (!string.IsNullOrEmpty(priceFilter) && Decimal.TryParse(priceFilter, out decimal price))
-                    {
-                        queryable = queryable.Where(BuildPredicate("Price", priceFilter));
-                    }
-                    if (!string.IsNullOrEmpty(metalFilter))
-                    {
-                        queryable = queryable.Where(BuildPredicate("Description", metalFilter));
+                        var trimmedFilter = filter.Trim();
+
+                        // Try to parse as price first
+                        if (Decimal.TryParse(trimmedFilter, out decimal price))
+                        {
+                            queryable = queryable.Where(BuildPredicate("Price", trimmedFilter));
+                        }
+                        else
+                        {
+                            // Check if it is a metal value from the database
+                            if (metalValues.Contains(trimmedFilter, StringComparer.OrdinalIgnoreCase))
+                            {
+                                queryable = queryable.Where(BuildPredicate("Metal", trimmedFilter));
+                            }
+                            else
+                            {
+                                // Otherwise, assume it's a name filter
+                                queryable = queryable.Where(BuildPredicate("Name", trimmedFilter));
+                            }
+                        }
                     }
                 }
             }

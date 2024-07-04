@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DiamondShopData.Models;
 using DiamondShopData;
-using DiamondShopBusiness.Category;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
