@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using DiamondShopData.ViewModel;
 
 namespace DiamondShopData.Repository
 {
@@ -19,7 +20,15 @@ namespace DiamondShopData.Repository
         {
             _context = context;
         }
-        public async Task<List<Product>> GetAllAsync(string? query = null)
+        //public async Task<IEnumerable<Product>> GetProductsPageAsync(int pageNumber, int pageSize)
+        //{
+        //    return await _context.Products
+        //                         .OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
+        //                         .Skip((pageNumber - 1) * pageSize)
+        //                         .Take(pageSize)
+        //                         .ToListAsync();
+        //}
+        public async Task<PageableResponseDTO<Product>> GetAllAsync(int pageNumber, int pageSize,string? query = null)
         {
             IQueryable<Product> queryable = _context.Set<Product>();
 
@@ -55,8 +64,19 @@ namespace DiamondShopData.Repository
                     }
                 }
             }
-
-            return await queryable.ToListAsync();
+            var totalItemCount = await queryable.CountAsync();
+            var totalOfPages = (int)Math.Ceiling((double)totalItemCount / pageSize);
+            var list = await queryable.OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
+                                .Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize)
+                               .ToListAsync();
+            return new PageableResponseDTO<Product>()
+            {
+                List = list.ToList(),
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalOfPages = totalOfPages
+            };
         }
 
         private static Expression<Func<Product, bool>> BuildPredicate(string property, string value)
