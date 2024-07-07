@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiamondShopBusiness
 {
@@ -21,11 +22,11 @@ namespace DiamondShopBusiness
             //_unitOfWork.ProductRepository = new ProductDAO();
             _unitOfWork ??= new UnitOfWork();
         }
-        public async Task<IBusinessResult> GetAll(string? query = null)
+        public async Task<IBusinessResult> GetAll(int pageNumber, int pageSize,  string? query = null)
         {
             try
             {
-                var currencies = await _unitOfWork.ProductRepository.GetAllAsync(query);
+                var currencies = await _unitOfWork.ProductRepository.GetAllAsync(pageNumber, pageSize, query);
                 if (currencies == null)
                 {
                     return new BusinessResult(-1, "No data found");
@@ -172,5 +173,25 @@ namespace DiamondShopBusiness
                 return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
             }
         }
+        //public async Task<IBusinessResult> GetProductsPageAsync(int pageNumber, int pageSize)
+        //{
+        //    try
+        //    {
+        //        var currency = await _unitOfWork.ProductRepository.GetProductsPageAsync(pageNumber, pageSize);
+        //        if(currency == null)
+        //        {
+        //            return new BusinessResult(Const.ERROR_DATA_NOT_FOUND, "No data found");
+        //        }
+        //        else
+        //        {
+        //            return new BusinessResult(Const.SUCCESS_GET, "Success", currency);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new BusinessResult(Const.ERROR_EXCEPTION, ex.Message);
+        //    }
+            
+        //}
     }
 }
