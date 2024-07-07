@@ -32,7 +32,7 @@
                     <th class="card-title text-center">Description</th>
                     <th class="card-title text-center">Price</th>
 
-@*                  <th class="card-title text-center">Metal</th>
+                    @*                  <th class="card-title text-center">Metal</th>
                     <th class="card-title text-center">Cost</th>
                     <th class="card-title text-center">Size</th>
                     <th class="card-title text-center">Stock</th>
@@ -120,7 +120,7 @@
                         html += '</tr>';
                     });
                     $('.tblProduct').html(html);
-                    generatePagination(result.pageNumber, result.totalOfPages);
+                    generatePagination(result.pageNumber, result.totalOfPages, query);
                 },
                 error: function (xhr, error) {
                     alert(xhr.statusText);
@@ -130,16 +130,15 @@
 
         function search() {
             var query = $('#searchQuery').val();
-            loadData(1, 10, query);
+            loadData(1, 2, query);
         }
 
-        function generatePagination(currentPage, totalPages) {
+        function generatePagination(currentPage, totalPages, query) {
             var paginationHtml = '';
 
             if (currentPage > 1) {
-                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ')">Prev</button>';
-            }
-            else {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 2, \'' + query + '\')">Prev</button>';
+            } else {
                 paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
             }
 
@@ -147,14 +146,13 @@
                 if (i === currentPage) {
                     paginationHtml += '<button class="btn btn-info">' + i + '</button>';
                 } else {
-                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ')">' + i + '</button>';
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 2, \'' + query + '\')">' + i + '</button>';
                 }
             }
 
             if (currentPage < totalPages) {
-                paginationHtml += '<button class="btn btn-outline-secondary"  onclick="loadData(' + (currentPage + 1) + ')">Next</button>';
-            }
-            else {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 2, \'' + query + '\')">Next</button>';
+            } else {
                 paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
             }
 
@@ -227,7 +225,7 @@
             });
         }
 
-        
+
         function addToCart(productId) {
             $.ajax({
                 url: "@Url.Action("AddToCart", "Products")",
