@@ -30,6 +30,7 @@ namespace DiamondShopWebApp.Controllers
         {
             return View();
         }
+        [HttpGet]
         public async Task<PageableResponseDTO<Diamond>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
         {
             try

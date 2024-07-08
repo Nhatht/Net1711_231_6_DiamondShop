@@ -26,14 +26,13 @@
             <thead>
                 <tr class="card-header">
                     <th class="card-title text-center">Id</th>
-                    <th class="card-title text-center">DiamondId</th>
+                     <th class="card-title text-center">DiamondId</th> 
                     <th class="card-title text-center">Name</th>
                     <th class="card-title text-center">ImageUrl</th>
                     <th class="card-title text-center">Description</th>
                     <th class="card-title text-center">Price</th>
-
-                    @*                  <th class="card-title text-center">Metal</th>
-                    <th class="card-title text-center">Cost</th>
+                    <th class="card-title text-center">Metal</th>
+                    @* <th class="card-title text-center">Cost</th>
                     <th class="card-title text-center">Size</th>
                     <th class="card-title text-center">Stock</th>
                     <th class="card-title text-center">IsDeleted</th> *@
@@ -107,14 +106,16 @@
                 dataType: "json",
                 success: function (result) {
                     var html = '';
+                    let count = 1;
                     $.each(result.list, function (key, item) {
                         html += '<tr>';
-                        html += '<td class="text-center">' + item.id + '</td>';
-                        html += '<td class="text-center">' + item.diamondId + '</td>';
+                        html += '<td class="text-center">' + count++ + '</td>';
+                        html += '<td class="text-center">' + item.diamondName + '</td>';
                         html += '<td class="text-center">' + item.name + '</td>';
                         html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: auto;"/></td>';
-                        html += '<td>' + item.description + '</td>';
+                        html += '<td class="text-center">' + item.description + '</td>';
                         html += '<td class="text-center">' + item.price + '</td>';
+                        html += '<td class="text-center">' + item.metal + '</td>';
                         html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
                         html += '<td><a href="#" onclick="return addToCart(\'' + item.id + '\')">Add to Cart</a></td>';
                         html += '</tr>';

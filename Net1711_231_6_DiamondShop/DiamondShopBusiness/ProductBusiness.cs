@@ -165,7 +165,8 @@ namespace DiamondShopBusiness
             }
             try
             {
-                await _unitOfWork.ProductRepository.RemoveAsync(currency);
+                //await _unitOfWork.ProductRepository.RemoveAsync(currency);
+                await _unitOfWork.ProductRepository.Delete(currency);
                 return new BusinessResult(Const.SUCCESS_GET, "Success");
             }
             catch (Exception ex)

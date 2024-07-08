@@ -39,11 +39,11 @@ namespace DiamondShopWebApp.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<PageableResponseDTO<Product>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
+        public async Task<PageableResponseDTO<ProductDTO>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
         {
             try
              {
-                var result = new PageableResponseDTO<Product>();
+                var result = new PageableResponseDTO<ProductDTO>();
                 using (var httpClient = new HttpClient())
                 {
                     string apiEndpoint = apiUrl + $"GetAll?pageNumber={pageNumber}&pageSize={pageSize}";
@@ -56,7 +56,7 @@ namespace DiamondShopWebApp.Controllers
                         if (response.IsSuccessStatusCode)
                         {
                             var content = await response.Content.ReadAsStringAsync();
-                            result = JsonConvert.DeserializeObject<PageableResponseDTO<Product>>(content);
+                            result = JsonConvert.DeserializeObject<PageableResponseDTO<ProductDTO>>(content);
                         }
                     }
                 }
@@ -386,4 +386,5 @@ namespace DiamondShopWebApp.Controllers
             session.SetString(CARTKEY, jsoncart);
         }
     }
+
 }

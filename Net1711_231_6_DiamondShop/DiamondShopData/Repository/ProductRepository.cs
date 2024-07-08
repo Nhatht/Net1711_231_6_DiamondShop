@@ -20,6 +20,12 @@ namespace DiamondShopData.Repository
         {
             _context = context;
         }
+        public async Task<bool> Delete(Product product)
+        {
+            product.IsDeleted = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
         //public async Task<IEnumerable<Product>> GetProductsPageAsync(int pageNumber, int pageSize)
         //{
         //    return await _context.Products
@@ -28,9 +34,9 @@ namespace DiamondShopData.Repository
         //                         .Take(pageSize)
         //                         .ToListAsync();
         //}
-        public async Task<PageableResponseDTO<Product>> GetAllAsync(int pageNumber, int pageSize,string? query = null)
+        public async Task<PageableResponseDTO<ProductDTO>> GetAllAsync(int pageNumber, int pageSize,string? query = null)
         {
-            IQueryable<Product> queryable = _context.Set<Product>();
+            IQueryable<Product> queryable = _context.Set<Product>().Where(x => x.IsDeleted == false);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -66,13 +72,31 @@ namespace DiamondShopData.Repository
             }
             var totalItemCount = await queryable.CountAsync();
             var totalOfPages = (int)Math.Ceiling((double)totalItemCount / pageSize);
-            var list = await queryable.OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
-                                .Skip((pageNumber - 1) * pageSize)
+            var list = await queryable.Include(x => x.Diamond).OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
+                               
+                .Skip((pageNumber - 1) * pageSize)
                                 .Take(pageSize)
                                .ToListAsync();
-            return new PageableResponseDTO<Product>()
+            List<ProductDTO> productDTOs = new List<ProductDTO>();
+            foreach(var p in list)
             {
-                List = list.ToList(),
+                ProductDTO pp = new ProductDTO
+                {
+                    Id = p.Id,
+                    Stock = p.Stock,
+                    Cost = p.Cost,
+                    Metal = p.Metal,
+                    Name = p.Name,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    DiamondName = p.Diamond.Name
+                };
+                productDTOs.Add(pp);
+            }
+            return new PageableResponseDTO<ProductDTO>()
+            {
+                List = productDTOs,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalOfPages = totalOfPages
@@ -106,5 +130,6 @@ namespace DiamondShopData.Repository
 
             throw new NotSupportedException($"The type of {property} is not supported");
         }
+
     }
 }

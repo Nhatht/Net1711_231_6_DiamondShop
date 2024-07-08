@@ -30,6 +30,7 @@ namespace DiamondShopData.ViewModel.ProductDTO
         public int Stock { get; set; }
 
         public bool IsDeleted { get; set; }
+        public string DiamondName { get; set; } = null!;
 
         public DiamondProductDTO Diamond { get; set; } = null!;
     }
