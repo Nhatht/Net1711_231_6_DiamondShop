@@ -97,7 +97,7 @@
         $(document).ready(function () {
             loadData();
         });
-        function loadData(pageNumber = 1, pageSize = 2, query = '') {
+        function loadData(pageNumber = 1, pageSize = 10, query = '') {
             $('#btn-close').click();
             $.ajax({
                 url: '@Url.Action("GetAll", "Products")',
@@ -130,14 +130,14 @@
 
         function search() {
             var query = $('#searchQuery').val();
-            loadData(1, 2, query);
+            loadData(1, 10, query);
         }
 
         function generatePagination(currentPage, totalPages, query) {
             var paginationHtml = '';
 
             if (currentPage > 1) {
-                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 2, \'' + query + '\')">Prev</button>';
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 10, \'' + query + '\')">Prev</button>';
             } else {
                 paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
             }
@@ -146,12 +146,12 @@
                 if (i === currentPage) {
                     paginationHtml += '<button class="btn btn-info">' + i + '</button>';
                 } else {
-                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 2, \'' + query + '\')">' + i + '</button>';
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 10, \'' + query + '\')">' + i + '</button>';
                 }
             }
 
             if (currentPage < totalPages) {
-                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 2, \'' + query + '\')">Next</button>';
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 10, \'' + query + '\')">Next</button>';
             } else {
                 paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
             }
