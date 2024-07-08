@@ -18,11 +18,11 @@ namespace DiamondShopBusiness
         {
             _unitOfWork ??= new UnitOfWork();
         }   
-        public async Task<IBusinessResult> GetAll()
+        public async Task<IBusinessResult> GetAll(int pageNumber, int pageSize, string? query = null)
         {
             try
             {
-                var diamonds = await _unitOfWork.DiamondRepository.GetAllAsync();
+                var diamonds = await _unitOfWork.DiamondRepository.GetAllAsync(pageNumber, pageSize, query);
                 if(diamonds == null)
                 {
                     return new BusinessResult(-4, "No diamond data");

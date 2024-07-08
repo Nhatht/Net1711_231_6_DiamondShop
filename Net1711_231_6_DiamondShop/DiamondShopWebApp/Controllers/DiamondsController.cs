@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Text;
 using Azure;
 using DiamondShopData.ViewModel.DiamondDTO;
+using DiamondShopData.ViewModel;
 
 namespace DiamondShopWebApp.Controllers
 {
@@ -29,28 +30,35 @@ namespace DiamondShopWebApp.Controllers
         {
             return View();
         }
-        public async Task<List<Diamond>> GetAll()
+        public async Task<PageableResponseDTO<Diamond>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
         {
             try
             {
-                var result = new List<Diamond>();
+                var result = new PageableResponseDTO<Diamond>();
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync(apiUrl + "GetAll"))
+                    string apiEndpoint = apiUrl + $"GetAll?pageNumber={pageNumber}&pageSize={pageSize}";
+                    if (!string.IsNullOrEmpty(query))
                     {
-                        if(response.IsSuccessStatusCode)
+                        apiEndpoint += $"&query={Uri.EscapeDataString(query)}";
+                    }
+                    using (var response = await httpClient.GetAsync(apiEndpoint))
+                    {
+                        if (response.IsSuccessStatusCode)
                         {
                             var content = await response.Content.ReadAsStringAsync();
-                            result = JsonConvert.DeserializeObject<List<Diamond>>(content);
+                            result = JsonConvert.DeserializeObject<PageableResponseDTO<Diamond>>(content);
                         }
                     }
                 }
                 return result;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
         }
+
         [HttpGet]
         public IActionResult Add()
         {

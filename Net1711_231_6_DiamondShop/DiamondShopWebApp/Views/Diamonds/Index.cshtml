@@ -16,6 +16,12 @@
         </button>
     </div>
 </div>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Price, Origin" />
+        <button type="button" class="btn btn-primary mt-2" onclick="search()">Search</button>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -63,12 +69,15 @@
     </div>
 </div>
 
+<nav id="paginationControls" aria-label="Page navigation" style="display: flex; justify-content: center; column-gap: 12px;">
+</nav>
+
 @section scripts {
     <script type="text/javascript">
-                $(document).ready(function () {
-                    loadData();
+        $(document).ready(function () {
+            loadData();
 
-                    $("#btSave").click(function () {
+            $("#btSave").click(function () {
                 var formData = new FormData();
                 formData.append("Id", $("#Id").val()); // ID tự tăng trong database, giá trị này có thể để trống hoặc bỏ qua khi tạo mới
                 formData.append("Name", $("#Name").val());
@@ -80,50 +89,52 @@
                 formData.append("CertificateNumber", $("#CertificateNumber").val());
                 formData.append("Price", $("#Price").val());
                 formData.append("IsDeleted", $("#IsDeleted").is(":checked"));
-        console.log(formData);
+                console.log(formData);
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '@Url.Action("AddDiamond", "Diamonds")',
-                            //contentType: 'application/json;charset=utf-8',
-                            //dataType: "json",
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            success: function (result) {
-                                console.log(result);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("AddDiamond", "Diamonds")',
+                    //contentType: 'application/json;charset=utf-8',
+                    //dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (result) {
+                        console.log(result);
 
-                                if (result.status >= 1) {
-                                    $('#diamondModal').modal('hide');
-                                    loadData();
-                                }
-                                alert(result.message);
-                            },
-                            error: function (xhr, error) {
-                                //alert(xhr.responseText);
-                                console.log(xhr);
-                            }
-                        });
-                    });
-
-                    ////////
+                        if (result.status >= 1) {
+                            $('#diamondModal').modal('hide');
+                            loadData();
+                        }
+                        alert(result.message);
+                    },
+                    error: function (xhr, error) {
+                        //alert(xhr.responseText);
+                        console.log(xhr);
+                    }
                 });
+            });
 
-                function loadData() {
-                    $.ajax({
-                        url: '@Url.Action("GetAll", "Diamonds")',
-                        type: "GET",
-                        contentType: "application/json;charset=utf-8",
-                        dataType: "json",
-                        success: function (result) {
-                            var html = '';
-                            $.each(result, function (key, item) {
-                                //console.log(item);
-                                html += '<tr>';
-                                html += '<td>' + item.id + '</td>';
+            ////////
+        });
+
+        function loadData(pageNumber = 1, pageSize = 2, query = '') {
+            $('#btn-close').click();
+            $.ajax({
+                url: '@Url.Action("GetAll", "Diamonds")',
+                type: "GET",
+                data: { pageNumber: pageNumber, pageSize: pageSize, query: query },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var html = '';
+                    $.each(result.list, function (key, item) {
+                        //console.log(item);
+                        html += '<tr>';
+                        html += '<td>' + item.id + '</td>';
 
                         html += '<td>' + item.name + '</td>';
-                                html += '<td>' + item.origin + '</td>';
+                        html += '<td>' + item.origin + '</td>';
                         html += '<td>' + item.caratWeight + '</td>';
                         html += '<td>' + item.color + '</td>';
                         html += '<td>' + item.clarity + '</td>';
@@ -131,16 +142,47 @@
                         html += '<td class="text-end">' + item.certificateNumber + '</td>';
                         html += '<td class="text-end">' + item.price + '</td>';
                         html += '<td class="text-end">' + item.isDeleted + '</td>';
-                                html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
-                                html += '</tr>';
-                            });
-                            $('.tblDiamonds').html(html);
-                        },
-                        error: function (xhr, error) {
-                            alert(xhr.statusText);
-                        }
+                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+                        html += '</tr>';
                     });
+                    $('.tblDiamonds').html(html);
+                    generatePagination(result.pageNumber, result.totalOfPages, query);
+                },
+                error: function (xhr, error) {
+                    alert(xhr.statusText);
                 }
+            });
+        }
+        function search() {
+            var query = $('#searchQuery').val();
+            loadData(1, 2, query);
+        }
+
+        function generatePagination(currentPage, totalPages, query) {
+            var paginationHtml = '';
+
+            if (currentPage > 1) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 2, \'' + query + '\')">Prev</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
+            }
+
+            for (var i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHtml += '<button class="btn btn-info">' + i + '</button>';
+                } else {
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 2, \'' + query + '\')">' + i + '</button>';
+                }
+            }
+
+            if (currentPage < totalPages) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 2, \'' + query + '\')">Next</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
+            }
+
+            $('#paginationControls').html(paginationHtml);
+        }
 
         function add() {
             $("#diamondModalContent").html("");
@@ -148,6 +190,21 @@
 
             $.ajax({
                 url: '@Url.Action("Add", "Diamonds")',
+                type: "GET",
+                success: function (result) {
+                    $("#diamondModalContent").html(result);
+                    $('#diamondModal').modal('show');
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
+        }
+        function view(id) {
+            $("#diamondModalContent").html("");
+            $("#diamondModalLabel").html(`View Product [${id}]`);
+            $.ajax({
+                url: '@Url.Action("Edit", "Diamonds")' + '/' + id,
                 type: "GET",
                 success: function (result) {
                     $("#diamondModalContent").html(result);
@@ -212,37 +269,37 @@
             });
         }
 
-        
 
 
-                function delele(id) {
-                    var result = confirm("Are you sure to delete?");
-                    if (result) {
-                        //alert(id);
-                        var formData = new FormData();
-                        formData.append("id", id);
 
-                        $.ajax({
-                            url: '@Url.Action("Delete", "Diamonds")',
-                            type: "POST",
-                            //contentType: 'application/json;charset=utf-8',
-                            //dataType: "json",
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            success: function (result) {
-                                if (result.status >= 1) {
-                                    $('#diamondModal').modal('hide');
-                                    loadData();
-                                }
-                                alert(result.message);
-                            },
-                            error: function (message) {
-                                alert(message);
-                            }
-                        });
+        function delele(id) {
+            var result = confirm("Are you sure to delete?");
+            if (result) {
+                //alert(id);
+                var formData = new FormData();
+                formData.append("id", id);
+
+                $.ajax({
+                    url: '@Url.Action("Delete", "Diamonds")',
+                    type: "POST",
+                    //contentType: 'application/json;charset=utf-8',
+                    //dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    data: formData,
+                    success: function (result) {
+                        if (result.status >= 1) {
+                            $('#diamondModal').modal('hide');
+                            loadData();
+                        }
+                        alert(result.message);
+                    },
+                    error: function (message) {
+                        alert(message);
                     }
-                }
+                });
+            }
+        }
 
     </script>
 }
