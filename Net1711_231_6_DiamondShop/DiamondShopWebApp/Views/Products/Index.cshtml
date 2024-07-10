@@ -3,6 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+@* <style>
+    #topUpModal .modal-dialog {
+        max-width: 60%; /* Adjust this value as needed */
+    }
+
+</style> *@
+<head>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
 <h1>Index</h1>
 <div class="row">
     <div class="col-md-10">
@@ -112,12 +122,12 @@
                         html += '<td class="text-center">' + count++ + '</td>';
                         html += '<td class="text-center">' + item.diamondName + '</td>';
                         html += '<td class="text-center">' + item.name + '</td>';
-                        html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: auto;"/></td>';
+                        html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: 100px; margin-top:20px"/></td>';
                         html += '<td class="text-center">' + item.description + '</td>';
                         html += '<td class="text-center">' + item.price + '</td>';
                         html += '<td class="text-center">' + item.metal + '</td>';
-                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
-                        html += '<td><a href="#" onclick="return addToCart(\'' + item.id + '\')">Add to Cart</a></td>';
+                        html += '<td><button type="button" style="width:100%" class="btn btn-outline-success" onclick="return edit(\'' + item.id + '\')">Edit</button> <br/> <button type="button" style="width:100%; margin-top:10px" class="btn btn-outline-info" onclick="return view(\'' + item.id + '\')">View</button> <br/> <button type="button" style="width:100%; margin-top:10px" class="btn btn-outline-danger" onclick="delele(\'' + item.id + '\')">Delete</button></td>';
+                        html += '<td><button type="button" class="btn btn-outline-success" onclick="return addToCart(\'' + item.id + '\')">Add to cart </button > </td>';
                         html += '</tr>';
                     });
                     $('.tblProduct').html(html);
@@ -358,3 +368,9 @@
 
     </script>
 }
+
+<script src="~/js/vendor/libs/jquery/jquery.js"></script>
+<script src="~/js/vendor/libs/popper/popper.js"></script>
+<script src="~/js/vendor/js/bootstrap.js"></script>
+<script src="~/js/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/js/vendor/js/menu.js"></script>

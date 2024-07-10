@@ -17,6 +17,21 @@ namespace DiamondShopWebAPI.Controllers
             _business = new DiamondBusiness();
         }
         [HttpGet]
+        [Route("GetAllDiamonds")]
+        public async Task<IActionResult> GetAllDiamonds()
+        {
+            var result = await _business.GetAllDiamonds();
+            if (result != null && result.Status > 0)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return NotFound(result.Message);
+            }
+        }
+
+        [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 2, string? query = null)
         {

@@ -18,6 +18,26 @@ namespace DiamondShopBusiness
         {
             _unitOfWork ??= new UnitOfWork();
         }   
+        public async Task<IBusinessResult> GetAllDiamonds()
+        {
+            try
+            {
+                var diamonds = await _unitOfWork.DiamondRepository.GetAllAsync();
+                if (diamonds == null)
+                {
+                    return new BusinessResult(-4, "No diamond data");
+                }
+                else
+                {
+                    return new BusinessResult(1, "Get diamond list success", diamonds);
+                }
+            }
+            catch(Exception ex)
+            {
+                return new BusinessResult(-1, ex.Message);
+            }
+
+        }
         public async Task<IBusinessResult> GetAll(int pageNumber, int pageSize, string? query = null)
         {
             try

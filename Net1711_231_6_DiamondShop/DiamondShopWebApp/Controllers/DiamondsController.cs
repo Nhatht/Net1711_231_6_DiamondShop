@@ -31,6 +31,30 @@ namespace DiamondShopWebApp.Controllers
             return View();
         }
         [HttpGet]
+        public async Task<List<Diamond>> GetAllDiamonds()
+        {
+            try
+            {
+                var result = new List<Diamond>();
+                using (var httpClient = new HttpClient())
+                {
+                    using (var response = await httpClient.GetAsync(apiUrl + "GetAllDiamonds"))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var content = await response.Content.ReadAsStringAsync();
+                            result = JsonConvert.DeserializeObject<List<Diamond>>(content);
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
         public async Task<PageableResponseDTO<Diamond>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
         {
             try
