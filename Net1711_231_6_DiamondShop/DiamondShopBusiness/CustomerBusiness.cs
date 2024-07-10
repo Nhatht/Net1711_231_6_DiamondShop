@@ -18,7 +18,7 @@ namespace DiamondShopBusiness
             //_DAO = new CustomerDAO();
             _unitOfWork ??= new UnitOfWork();
         }
-        public async Task<IBusinessResult> GetAll()
+        public async Task<IBusinessResult> GetAllCustomer()
         {
             try
             {
@@ -37,6 +37,25 @@ namespace DiamondShopBusiness
             catch (Exception ex)
             {
                 return new BusinessResult(-4, ex.Message);
+            }
+        }
+        public async Task<IBusinessResult> GetAll(int pageNumber, int pageSize, string? query = null)
+        {
+            try
+            {
+                var customers = await _unitOfWork.CustomerRepository.GetAllAsync(pageNumber, pageSize, query);
+                if (customers == null)
+                {
+                    return new BusinessResult(-4, "No customer data");
+                }
+                else
+                {
+                    return new BusinessResult(1, "Get customer list success", customers);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new BusinessResult(-1, ex.Message);
             }
         }
         public async Task<IBusinessResult> CreateCustomer(Customer customer)

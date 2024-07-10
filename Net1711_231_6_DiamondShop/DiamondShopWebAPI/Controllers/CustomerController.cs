@@ -16,10 +16,10 @@ namespace DiamondShopWebAPI.Controllers
             _business = new CustomerBusiness();
         }
         [HttpGet]
-        [Route("GetAll")]
-        public async Task<IActionResult> GetAll()
+        [Route("GetAllCustomer")]
+        public async Task<IActionResult> GetAllCustomer()
         {
-            var result = await _business.GetAll();
+            var result = await _business.GetAllCustomer();
             if (result != null && result.Status > 0)
             {
                 var customer = result.Data as List<Customer>;
@@ -28,6 +28,20 @@ namespace DiamondShopWebAPI.Controllers
             else
             {
                 return NotFound(result?.Message);
+            }
+        }
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 2, string? query = null)
+        {
+            var result = await _business.GetAll(pageNumber, pageSize, query);
+            if (result != null && result.Status > 0)
+            {
+                return Ok(result.Data);
+            }
+            else
+            {
+                return NotFound(result);
             }
         }
         [HttpGet]
