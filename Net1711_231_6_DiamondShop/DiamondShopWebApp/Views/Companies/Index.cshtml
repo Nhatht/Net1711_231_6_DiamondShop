@@ -17,6 +17,13 @@
 	</div>
 </div>
 
+<div class="row mb-3">
+	<div class="col-md-12">
+		<input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Email, Description or Address" />
+		<button type="button" class="btn btn-primary mt-2" onclick="search()">Search</button>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col-md-12">
 		<table class="table table-striped table-bordered table-hover">
@@ -61,6 +68,9 @@
 	</div>
 </div>
 
+<nav id="paginationControls" aria-label="Page navigation" style="display: flex; justify-content: center; column-gap: 12px;">
+</nav>
+
 @section scripts {
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -103,34 +113,74 @@
 			});
 		});
 
-		function loadData() {
+		// function loadData() {
+		// 	$.ajax({
+		// 		url: '@Url.Action("GetAll", "Companies")',
+		// 		type: "GET",
+		// 		contentType: "application/json;charset=utf-8",
+		// 		dataType: "json",
+		// 		success: function (result) {
+		// 			var html = '';
+		// 			$.each(result, function (key, item) {
+		// 				//console.log(item);
+		// 				html += '<tr>';
+		// 				html += '<td>' + item.name + '</td>';
+		// 				html += '<td>' + item.email + '</td>';
+		// 				html += '<td>' + item.description + '</td>';
+		// 				html += '<td>' + item.phone + '</td>';
+		// 				html += '<td>' + item.address + '</td>';
+		// 				html += '<td>' + item.createdDate + '</td>';
+		// 				html += '<td>' + item.password + '</td>';
+		// 				html += '<td>' + item.role + '</td>';
+		// 				html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+		// 				html += '</tr>';
+		// 			});
+		// 			$('.tblTopUpList').html(html);
+		// 		},
+		// 		error: function (xhr, error) {
+		// 			alert(xhr.statusText);
+		// 		}
+		// 	});
+		// }
+
+		function loadData(pageNumber = 1, pageSize = 2, query = '') {
+			$('#btn-close').click();
 			$.ajax({
 				url: '@Url.Action("GetAll", "Companies")',
 				type: "GET",
+				data: { pageNumber: pageNumber, pageSize: pageSize, query: query },
 				contentType: "application/json;charset=utf-8",
 				dataType: "json",
 				success: function (result) {
 					var html = '';
-					$.each(result, function (key, item) {
+					$.each(result.list, function (key, item) {
 						//console.log(item);
-						html += '<tr>';
-						html += '<td>' + item.name + '</td>';
-						html += '<td>' + item.email + '</td>';
-						html += '<td>' + item.description + '</td>';
-						html += '<td>' + item.phone + '</td>';
-						html += '<td>' + item.address + '</td>';
-						html += '<td>' + item.createdDate + '</td>';
-						html += '<td>' + item.password + '</td>';
-						html += '<td>' + item.role + '</td>';
-						html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
-						html += '</tr>';
+						if (!item.isDeleted) {
+							html += '<tr>';
+							html += '<td>' + item.name + '</td>';
+							html += '<td>' + item.email + '</td>';
+							html += '<td>' + item.description + '</td>';
+							html += '<td>' + item.phone + '</td>';
+							html += '<td>' + item.address + '</td>';
+							html += '<td>' + item.createdDate + '</td>';
+							html += '<td>' + item.password + '</td>';
+							html += '<td>' + item.role + '</td>';
+							html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+							html += '</tr>';
+						}
 					});
 					$('.tblTopUpList').html(html);
+					generatePagination(result.pageNumber, result.totalOfPages, query);
 				},
 				error: function (xhr, error) {
 					alert(xhr.statusText);
 				}
 			});
+		}
+
+		function search() {
+			var query = $('#searchQuery').val();
+			loadData(1, 2, query);
 		}
 
 		function add() {
@@ -148,6 +198,32 @@
 					alert(message);
 				}
 			});
+		}
+
+		function generatePagination(currentPage, totalPages, query) {
+			var paginationHtml = '';
+
+			if (currentPage > 1) {
+				paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 2, \'' + query + '\')">Prev</button>';
+			} else {
+				paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
+			}
+
+			for (var i = 1; i <= totalPages; i++) {
+				if (i === currentPage) {
+					paginationHtml += '<button class="btn btn-info">' + i + '</button>';
+				} else {
+					paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 2, \'' + query + '\')">' + i + '</button>';
+				}
+			}
+
+			if (currentPage < totalPages) {
+				paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 2, \'' + query + '\')">Next</button>';
+			} else {
+				paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
+			}
+
+			$('#paginationControls').html(paginationHtml);
 		}
 
 		// function edit(id) {

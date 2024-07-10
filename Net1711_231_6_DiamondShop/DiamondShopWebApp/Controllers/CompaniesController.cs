@@ -13,6 +13,7 @@ using DiamondShopWebAPI.Controllers;
 using System.Net.Http;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Text;
+using DiamondShopData.ViewModel;
 
 namespace DiamondShopWebApp.Controllers
 {
@@ -36,25 +37,43 @@ namespace DiamondShopWebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Company>> GetAll()
-        {
+        public async Task<PageableResponseDTO<Company>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
+		{
             try
             {
-                var result = new List<Company>();
-                using (var httpClient = new HttpClient())
-                {
-                    using (var response = await httpClient.GetAsync(URL + "GetAll"))
-                    {
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var content = await response.Content.ReadAsStringAsync();
-                            var jsonResult = JObject.Parse(content);
-                            var companiesArray = jsonResult["data"].ToString();
-                            result = JsonConvert.DeserializeObject<List<Company>>(companiesArray);
-                        }
-                    }
-                }
-                return result;
+                var result = new PageableResponseDTO<Company>();
+				//using (var httpClient = new HttpClient())
+				//{
+				//    using (var response = await httpClient.GetAsync(URL + "GetAll"))
+				//    {
+				//        if (response.IsSuccessStatusCode)
+				//        {
+				//            var content = await response.Content.ReadAsStringAsync();
+				//            var jsonResult = JObject.Parse(content);
+				//            var companiesArray = jsonResult["data"].ToString();
+				//            result = JsonConvert.DeserializeObject<List<Company>>(companiesArray);
+				//        }
+				//    }
+				//}
+				using (var httpClient = new HttpClient())
+				{
+					string APIendpoint = URL + $"GetAll?pageNumber={pageNumber}&pageSize={pageSize}";
+					if (!string.IsNullOrEmpty(query))
+					{
+						APIendpoint += $"&query={Uri.EscapeDataString(query)}";
+					}
+					using (var response = await httpClient.GetAsync(APIendpoint))
+					{
+						if (response.IsSuccessStatusCode)
+						{
+							var content = await response.Content.ReadAsStringAsync();
+							var jsonResult = JObject.Parse(content);
+							var companiesArray = jsonResult["data"].ToString();
+							result = JsonConvert.DeserializeObject<PageableResponseDTO<Company>>(companiesArray);
+						}
+					}
+				}
+				return result;
             }
             catch (Exception ex)
             {
