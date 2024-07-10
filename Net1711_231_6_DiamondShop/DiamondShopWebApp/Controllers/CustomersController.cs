@@ -1,5 +1,6 @@
 ﻿using DiamondShopBusiness;
 using DiamondShopData.Models;
+using DiamondShopData.ViewModel;
 using DiamondShopData.ViewModel.CustomerDTO;
 using DiamondShopWebAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +22,14 @@ namespace DiamondShopWebApp.Controllers
 
         }
         [HttpGet]
-        public async Task<List<Customer>> GetAll()
+        public async Task<List<Customer>> GetAllCustomer()
         {
             try
             {
                 var result = new List<Customer>();
                 using (var httpClient = new HttpClient())
                 {
-                    using (var response = await httpClient.GetAsync(apiUrl + "GetAll"))
+                    using (var response = await httpClient.GetAsync(apiUrl + "GetAllCustomer"))
                     {
                         if (response.IsSuccessStatusCode)
                         {
@@ -38,6 +39,35 @@ namespace DiamondShopWebApp.Controllers
                     }
                 }
 
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        [HttpGet]
+        public async Task<PageableResponseDTO<Customer>> GetAll(int pageNumber = 1, int pageSize = 10, string? query = null)
+        {
+            try
+            {
+                var result = new PageableResponseDTO<Customer>();
+                using (var httpClient = new HttpClient())
+                {
+                    string apiEndpoint = apiUrl + $"GetAll?pageNumber={pageNumber}&pageSize={pageSize}";
+                    if (!string.IsNullOrEmpty(query))
+                    {
+                        apiEndpoint += $"&query={Uri.EscapeDataString(query)}";
+                    }
+                    using (var response = await httpClient.GetAsync(apiEndpoint))
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var content = await response.Content.ReadAsStringAsync();
+                            result = JsonConvert.DeserializeObject<PageableResponseDTO<Customer>>(content);
+                        }
+                    }
+                }
                 return result;
             }
             catch (Exception ex)

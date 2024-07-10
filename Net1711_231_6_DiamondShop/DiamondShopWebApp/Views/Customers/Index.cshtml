@@ -17,7 +17,7 @@
 </div>
 <div class="row mb-3">
     <div class="col-md-12">
-        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Email, PhoneNumber" />
+        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Address, Gender" />
         <button type="button" class="btn btn-primary mt-2" onclick="search()">Search</button>
     </div>
 </div>
@@ -67,6 +67,8 @@
         </div>
     </div>
 </div>
+<nav id="paginationControls" aria-label="Page navigation" style="display: flex; justify-content: center; column-gap: 12px;">
+</nav>
 
 @section scripts {
     <script type="text/javascript">
@@ -110,20 +112,23 @@
 
             ////////
         });
+
         function search() {
             var query = $('#searchQuery').val();
             loadData(query);
         }
-        function loadData() {
+
+        function loadData(pageNumber = 1, pageSize = 10, query = '') {
+            $('#btn-close').click();
             $.ajax({
                 url: '@Url.Action("GetAll", "Customers")',
+                data: { pageNumber: pageNumber, pageSize: pageSize, query: query },
                 type: "GET",
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     var html = '';
-                    $.each(result, function (key, item) {
-                        //console.log(item);
+                    $.each(result.list, function (key, item) {
                         html += '<tr>';
                         html += '<td>' + item.id + '</td>';
                         html += '<td>' + item.username + '</td>';
@@ -138,6 +143,7 @@
                         html += '</tr>';
                     });
                     $('.tblCustomer').html(html);
+                    generatePagination(result.pageNumber, result.totalOfPages, query);
                 },
                 error: function (xhr, error) {
                     alert(xhr.statusText);
@@ -210,6 +216,7 @@
                 });
             }
         }
+
         function update(id) {
             var data = {
                 Id: parseInt($("#Id").val(), 10),
@@ -244,5 +251,36 @@
             });
         }
 
+        function generatePagination(currentPage, totalPages, query) {
+            var paginationHtml = '';
+
+            if (currentPage > 1) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 10, \'' + query + '\')">Prev</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
+            }
+
+            for (var i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHtml += '<button class="btn btn-info">' + i + '</button>';
+                } else {
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 10, \'' + query + '\')">' + i + '</button>';
+                }
+            }
+
+            if (currentPage < totalPages) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 10, \'' + query + '\')">Next</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
+            }
+
+            $('#paginationControls').html(paginationHtml);
+        }
+
     </script>
 }
+<script src="~/js/vendor/libs/jquery/jquery.js"></script>
+<script src="~/js/vendor/libs/popper/popper.js"></script>
+<script src="~/js/vendor/js/bootstrap.js"></script>
+<script src="~/js/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/js/vendor/js/menu.js"></script>
