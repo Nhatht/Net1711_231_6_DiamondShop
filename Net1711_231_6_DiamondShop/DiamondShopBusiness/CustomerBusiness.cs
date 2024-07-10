@@ -43,14 +43,14 @@ namespace DiamondShopBusiness
         {
             try
             {
-                var diamonds = await _unitOfWork.CustomerRepository.GetAllAsync(pageNumber, pageSize, query);
-                if (diamonds == null)
+                var customers = await _unitOfWork.CustomerRepository.GetAllAsync(pageNumber, pageSize, query);
+                if (customers == null)
                 {
                     return new BusinessResult(-4, "No customer data");
                 }
                 else
                 {
-                    return new BusinessResult(1, "Get customer list success", diamonds);
+                    return new BusinessResult(1, "Get customer list success", customers);
                 }
             }
             catch (Exception ex)

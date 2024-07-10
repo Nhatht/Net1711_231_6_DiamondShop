@@ -25,23 +25,15 @@ namespace DiamondShopData.Repository
                 var filters = query.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 if (filters.Length != 0)
                 {
-                    var origin = await _context.Set<Customer>().Select(p => p.Name).Distinct().ToListAsync();
-
                     foreach (var filter in filters)
                     {
                         var trimmedFilter = filter.Trim();
 
-                            // Check if it is a gender value from the database
-                            if (origin.Contains(trimmedFilter, StringComparer.OrdinalIgnoreCase))
-                            {
-                                queryable = queryable.Where(BuildPredicate("Gender", trimmedFilter));
-                            }
-                            else
-                            {
-                                // Otherwise, assume it's a name filter
-                                queryable = queryable.Where(BuildPredicate("Address", trimmedFilter));
-                            }
-                        
+                        // Apply filters to Name, Address, and Gender using Contains for partial matching
+                        queryable = queryable.Where(BuildPredicate("Name", trimmedFilter))
+                                             .Union(queryable.Where(BuildPredicate("Address", trimmedFilter)))
+                                             .Union(queryable.Where(BuildPredicate("Gender", trimmedFilter)));
+
                     }
                 }
             }

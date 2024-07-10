@@ -115,7 +115,7 @@
 
         function search() {
             var query = $('#searchQuery').val();
-            loadData(query);
+            loadData(1, 10, query);
         }
 
         function loadData(pageNumber = 1, pageSize = 10, query = '') {

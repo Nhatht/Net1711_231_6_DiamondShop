@@ -1,1 +1,0 @@
-D:\FPT University\CN8\PRN231\Net1711_231_6_DiamondShop\Net1711_231_6_DiamondShop\DiamondShopWebAPI\bin\Debug\net8.0\DiamondShopWebAPI.exe
