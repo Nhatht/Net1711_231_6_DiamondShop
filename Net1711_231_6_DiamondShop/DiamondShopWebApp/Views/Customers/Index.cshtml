@@ -15,6 +15,12 @@
         </button>
     </div>
 </div>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Email, PhoneNumber" />
+        <button type="button" class="btn btn-primary mt-2" onclick="search()">Search</button>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -104,7 +110,10 @@
 
             ////////
         });
-
+        function search() {
+            var query = $('#searchQuery').val();
+            loadData(query);
+        }
         function loadData() {
             $.ajax({
                 url: '@Url.Action("GetAll", "Customers")',
