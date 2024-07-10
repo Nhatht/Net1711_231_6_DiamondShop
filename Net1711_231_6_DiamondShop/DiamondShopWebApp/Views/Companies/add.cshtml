@@ -4,38 +4,38 @@
 
 <div class="form-group row">
 
-    <div class="col-md-6">
-        <label for="1">Code</label>
-        @Html.HiddenFor(model => model.Id)
-        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
+	<div class="col-md-6">
+		<label for="1">Code</label>
+		@Html.HiddenFor(model => model.Id)
+		@Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+	</div>
 
-    <div class="col-md-6">
-        <label for="1">Name</label>
-        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Email</label>
-        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Description</label>
-        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Phone</label>
-        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Address</label>
-        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Password</label>
-        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
-    <div class="col-md-6">
-        <label for="1">Role</label>
-        @Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control" } })
-    </div>
+	<div class="col-md-6">
+		<label for="1">Name</label>
+		@Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Email</label>
+		@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Description</label>
+		@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Phone</label>
+		@Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Address</label>
+		@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Password</label>
+		@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
+	<div class="col-md-6">
+		<label for="1">Role</label>
+		@Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control" } })
+	</div>
 </div>
