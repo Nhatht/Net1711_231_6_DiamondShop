@@ -4,6 +4,7 @@ using DiamondShopData.ViewModel.ProductDTO;
 using DiamondShopData.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing.Printing;
 
 
 namespace DiamondShopWebAPI.Controllers
@@ -18,12 +19,17 @@ namespace DiamondShopWebAPI.Controllers
         {
             _business = new ProductBusiness();
         }
-
+        //[HttpGet]
+        //public async Task<IActionResult> ProductsPage(int pageNumber = 1, int pageSize = 10)
+        //{
+        //    var result = await _business.GetProductsPageAsync(pageNumber, pageSize);
+        //    return Ok(result);
+        //}
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IActionResult> GetAll(string? query = null)
+        public async Task<IActionResult> GetAll(int pageNumber = 1, int pageSize = 2, string? query = null)
         {
-            var result = await _business.GetAll(query);
+            var result = await _business.GetAll(pageNumber, pageSize, query);
             if (result != null && result.Status > 0)
             {
                 return Ok(result.Data);

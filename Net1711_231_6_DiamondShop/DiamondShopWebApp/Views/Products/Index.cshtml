@@ -3,6 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+@* <style>
+    #topUpModal .modal-dialog {
+        max-width: 60%; /* Adjust this value as needed */
+    }
+
+</style> *@
+<head>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
 <h1>Index</h1>
 <div class="row">
     <div class="col-md-10">
@@ -16,7 +26,7 @@
 </div>
 <div class="row mb-3">
     <div class="col-md-12">
-        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Age, City" />
+        <input type="text" id="searchQuery" class="form-control" placeholder="Search by Name, Price, Metal" />
         <button type="button" class="btn btn-primary mt-2" onclick="search()">Search</button>
     </div>
 </div>
@@ -26,13 +36,13 @@
             <thead>
                 <tr class="card-header">
                     <th class="card-title text-center">Id</th>
-                    <th class="card-title text-center">DiamondId</th>
+                     <th class="card-title text-center">DiamondId</th> 
                     <th class="card-title text-center">Name</th>
                     <th class="card-title text-center">ImageUrl</th>
                     <th class="card-title text-center">Description</th>
-@*                     <th class="card-title text-center">Metal</th>
                     <th class="card-title text-center">Price</th>
-                    <th class="card-title text-center">Cost</th>
+                    <th class="card-title text-center">Metal</th>
+                    @* <th class="card-title text-center">Cost</th>
                     <th class="card-title text-center">Size</th>
                     <th class="card-title text-center">Stock</th>
                     <th class="card-title text-center">IsDeleted</th> *@
@@ -45,6 +55,25 @@
         </table>
     </div>
 </div>
+
+@* <div class="row">
+    <div class="col-md-12 text-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous" onclick="prevPage()">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next" onclick="nextPage()">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div> *@
 
 <div class="modal fade" id="currencyModal" tabindex="-1" aria-labelledby="currencyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -68,34 +97,41 @@
     </div>
 </div>
 
+<nav id="paginationControls" aria-label="Page navigation" style="display: flex; justify-content: center; column-gap: 12px;">
+</nav>
+
 
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function () {
             loadData();
         });
-        function loadData(query = '') {
+        function loadData(pageNumber = 1, pageSize = 10, query = '') {
             $('#btn-close').click();
             $.ajax({
                 url: '@Url.Action("GetAll", "Products")',
                 type: "GET",
-                data: { query: query },
+                data: { pageNumber: pageNumber, pageSize: pageSize, query: query },
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (result) {
                     var html = '';
-                    $.each(result, function (key, item) {
+                    let count = 1;
+                    $.each(result.list, function (key, item) {
                         html += '<tr>';
-                        html += '<td class="text-center">' + item.id + '</td>';
-                        html += '<td class="text-center">' + item.diamondId + '</td>';
+                        html += '<td class="text-center">' + count++ + '</td>';
+                        html += '<td class="text-center">' + item.diamondName + '</td>';
                         html += '<td class="text-center">' + item.name + '</td>';
-                        html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: auto;"/></td>';
-                        html += '<td>' + item.description + '</td>';
-                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
-                        html += '<td><a href="#" onclick="return addToCart(\'' + item.id + '\')">Add to Cart</a></td>';
+                        html += '<td class="text-center"><img src="' + item.imageUrl + '" alt="Image" style="width: 100px; height: 100px; margin-top:20px"/></td>';
+                        html += '<td class="text-center">' + item.description + '</td>';
+                        html += '<td class="text-center">' + item.price + '</td>';
+                        html += '<td class="text-center">' + item.metal + '</td>';
+                        html += '<td><button type="button" style="width:100%" class="btn btn-outline-success" onclick="return edit(\'' + item.id + '\')">Edit</button> <br/> <button type="button" style="width:100%; margin-top:10px" class="btn btn-outline-info" onclick="return view(\'' + item.id + '\')">View</button> <br/> <button type="button" style="width:100%; margin-top:10px" class="btn btn-outline-danger" onclick="delele(\'' + item.id + '\')">Delete</button></td>';
+                        html += '<td><button type="button" class="btn btn-outline-success" onclick="return addToCart(\'' + item.id + '\')">Add to cart </button > </td>';
                         html += '</tr>';
                     });
                     $('.tblProduct').html(html);
+                    generatePagination(result.pageNumber, result.totalOfPages, query);
                 },
                 error: function (xhr, error) {
                     alert(xhr.statusText);
@@ -105,8 +141,35 @@
 
         function search() {
             var query = $('#searchQuery').val();
-            loadData(query);
+            loadData(1, 10, query);
         }
+
+        function generatePagination(currentPage, totalPages, query) {
+            var paginationHtml = '';
+
+            if (currentPage > 1) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage - 1) + ', 10, \'' + query + '\')">Prev</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Prev</button>';
+            }
+
+            for (var i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHtml += '<button class="btn btn-info">' + i + '</button>';
+                } else {
+                    paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + i + ', 10, \'' + query + '\')">' + i + '</button>';
+                }
+            }
+
+            if (currentPage < totalPages) {
+                paginationHtml += '<button class="btn btn-outline-secondary" onclick="loadData(' + (currentPage + 1) + ', 10, \'' + query + '\')">Next</button>';
+            } else {
+                paginationHtml += '<button class="btn btn-outline-secondary" disabled>Next</button>';
+            }
+
+            $('#paginationControls').html(paginationHtml);
+        }
+
         // function create() {
         //     var data = {
         //         DiamondId: $("#DiamondId").val(),
@@ -173,7 +236,7 @@
             });
         }
 
-        
+
         function addToCart(productId) {
             $.ajax({
                 url: "@Url.Action("AddToCart", "Products")",
@@ -305,3 +368,9 @@
 
     </script>
 }
+
+<script src="~/js/vendor/libs/jquery/jquery.js"></script>
+<script src="~/js/vendor/libs/popper/popper.js"></script>
+<script src="~/js/vendor/js/bootstrap.js"></script>
+<script src="~/js/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+<script src="~/js/vendor/js/menu.js"></script>

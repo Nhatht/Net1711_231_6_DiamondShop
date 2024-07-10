@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using DiamondShopData.ViewModel;
 
 namespace DiamondShopData.Repository
 {
@@ -19,36 +20,87 @@ namespace DiamondShopData.Repository
         {
             _context = context;
         }
-        public async Task<List<Product>> GetAllAsync(string? query = null)
+        public async Task<bool> Delete(Product product)
         {
-            IQueryable<Product> queryable = _context.Set<Product>();
+            product.IsDeleted = true;
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        //public async Task<IEnumerable<Product>> GetProductsPageAsync(int pageNumber, int pageSize)
+        //{
+        //    return await _context.Products
+        //                         .OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
+        //                         .Skip((pageNumber - 1) * pageSize)
+        //                         .Take(pageSize)
+        //                         .ToListAsync();
+        //}
+        public async Task<PageableResponseDTO<ProductDTO>> GetAllAsync(int pageNumber, int pageSize,string? query = null)
+        {
+            IQueryable<Product> queryable = _context.Set<Product>().Where(x => x.IsDeleted == false);
 
             if (!string.IsNullOrEmpty(query))
             {
                 var filters = query.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 if (filters.Length != 0)
                 {
-                    var nameFilter = filters.Length > 0 ? filters[0].Trim() : null;
-                    var priceFilter = filters.Length > 1 ? filters[1].Trim() : null;
-                    var metalFilter = filters.Length > 2 ? filters[2].Trim() : null;
+                    var metalValues = await _context.Set<Product>().Select(p => p.Metal).Distinct().ToListAsync();
 
-                    // Apply filters dynamically
-                    if (!string.IsNullOrEmpty(nameFilter))
+                    foreach (var filter in filters)
                     {
-                        queryable = queryable.Where(BuildPredicate("Name", nameFilter));
-                    }
-                    if (!string.IsNullOrEmpty(priceFilter) && Decimal.TryParse(priceFilter, out decimal price))
-                    {
-                        queryable = queryable.Where(BuildPredicate("Price", priceFilter));
-                    }
-                    if (!string.IsNullOrEmpty(metalFilter))
-                    {
-                        queryable = queryable.Where(BuildPredicate("Metal", metalFilter));
+                        var trimmedFilter = filter.Trim();
+
+                        // Try to parse as price first
+                        if (Decimal.TryParse(trimmedFilter, out decimal price))
+                        {
+                            queryable = queryable.Where(BuildPredicate("Price", trimmedFilter));
+                        }
+                        else
+                        {
+                            // Check if it is a metal value from the database
+                            if (metalValues.Contains(trimmedFilter, StringComparer.OrdinalIgnoreCase))
+                            {
+                                queryable = queryable.Where(BuildPredicate("Metal", trimmedFilter));
+                            }
+                            else
+                            {
+                                // Otherwise, assume it's a name filter
+                                queryable = queryable.Where(BuildPredicate("Name", trimmedFilter));
+                            }
+                        }
                     }
                 }
             }
-
-            return await queryable.ToListAsync();
+            var totalItemCount = await queryable.CountAsync();
+            var totalOfPages = (int)Math.Ceiling((double)totalItemCount / pageSize);
+            var list = await queryable.Include(x => x.Diamond).OrderBy(p => p.Id) // Assuming you're ordering by the Id. Adjust accordingly.
+                               
+                .Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize)
+                               .ToListAsync();
+            List<ProductDTO> productDTOs = new List<ProductDTO>();
+            foreach(var p in list)
+            {
+                ProductDTO pp = new ProductDTO
+                {
+                    Id = p.Id,
+                    Stock = p.Stock,
+                    Cost = p.Cost,
+                    Metal = p.Metal,
+                    Name = p.Name,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    DiamondName = p.Diamond.Name
+                };
+                productDTOs.Add(pp);
+            }
+            return new PageableResponseDTO<ProductDTO>()
+            {
+                List = productDTOs,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalOfPages = totalOfPages
+            };
         }
 
         private static Expression<Func<Product, bool>> BuildPredicate(string property, string value)
@@ -78,5 +130,6 @@ namespace DiamondShopData.Repository
 
             throw new NotSupportedException($"The type of {property} is not supported");
         }
+
     }
 }
