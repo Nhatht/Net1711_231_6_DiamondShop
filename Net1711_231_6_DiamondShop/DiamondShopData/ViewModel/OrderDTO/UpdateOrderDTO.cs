@@ -9,6 +9,5 @@ namespace DiamondShopData.ViewModel
     public class UpdateOrderDTO
     {
         public string Status { get; set; }
-        public int SaleStaffId { get; set; }
     }
 }

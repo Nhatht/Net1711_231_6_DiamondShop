@@ -1,67 +1,63 @@
-﻿@model DiamondShopData.Models.Order
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<DiamondShopData.ViewModel.OrderDTO.OrderProductDTO>
 
 @{
-    ViewData["Title"] = "View";
+    ViewData["Title"] = "Order Details";
 }
 
-<h1>Order Detail</h1>
+<h1>Order Details</h1>
 
-<p>
-    @ViewBag.StringJSON
-</p>
 <table class="table">
     <thead>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SaleStaffId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeliveryStaffId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TotalPrice)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th></th>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Diamond Name</th>
+        <th>Image Product</th>
+        <th>Price</th>
+        <th>Metal</th>
+        <th>Quantity</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>
-            @Html.DisplayFor(model => model.Id)
-        </td>
-        <th>
-            @Html.DisplayFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.CustomerId)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.SaleStaffId)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.DeliveryStaffId)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.TotalPrice)
-        </th>
-        <th>
-            @Html.DisplayFor(model => model.CreatedDate)
-        </th>
-    </tr>
+    @{
+        int no = 1;
+    }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @no
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.DiamondName)
+            </td>
+
+            <td>
+                <img src="@item.Product.ImageUrl" alt="Product Image" style="width:100px;height:auto;" />
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Price)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Metal)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.quantity)
+            </td>
+        </tr>
+        no++;
+    }
     </tbody>
 </table>
 <div>
-        <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>

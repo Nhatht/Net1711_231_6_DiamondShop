@@ -27,7 +27,7 @@ namespace DiamondShopBusiness
         {
             try
             {
-                var currencies = await _unitOfWork.OrderRepository.GetAllAsync();
+                var currencies = await _unitOfWork.OrderRepository.GetOrder();
                 if (currencies == null)
                 {
                     return new BusinessResult(-1, "No data found");
@@ -46,7 +46,7 @@ namespace DiamondShopBusiness
         {
             try
             {
-                var currency = await _unitOfWork.OrderRepository.GetByIdAsync(id);
+                var currency = await _unitOfWork.OrderRepository.GetOrderDtO(id);
                 if (currency == null)
                 {
                     return new BusinessResult(Const.ERROR_DATA_NOT_FOUND, "No data found");
@@ -116,7 +116,7 @@ namespace DiamondShopBusiness
             try
             {
                 var order = await _unitOfWork.OrderRepository.GetByIdAsync(id);
-                order.SaleStaffId = dto.SaleStaffId;
+                //order.SaleStaffId = 3;
                 order.Status = dto.Status;
                 var result = await _unitOfWork.OrderRepository.UpdateAsync(order);
                 if (result != 1)

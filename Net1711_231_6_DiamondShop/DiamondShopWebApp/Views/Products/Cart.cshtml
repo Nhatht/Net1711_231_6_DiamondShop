@@ -12,6 +12,7 @@
                 <tr>
                     <th>#</th>
                     <th>Product</th>
+                    <th>Image</th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th>Total Price</th>
@@ -27,6 +28,7 @@
                     <tr>
                         <td>@(stt++)</td>
                         <td>@cartitem.product.Name</td>
+                        <td><img src="@cartitem.product.ImageUrl" alt="Image" style="width: 80px; height: 80px" /></td>
                         <td>@(cartitem.product.Price.ToString("n0"))</td>
                         <td>
                             <input asp-for="@cartitem.quantity" id="@($"quantity-{cartitem.product.Id}")" />
@@ -41,14 +43,14 @@
                     </tr>
                 }
                 <tr>
-                    <td colspan="4" class="text-right">Total</td>
+                    <td colspan="5" class="text-right">Total</td>
                     <td>@(total.ToString("n0"))</td>
                     <td></td>
                 </tr>
             </tbody>
         </table>
 
-        <button type="submit" class="btn btn-success">Gửi đơn hàng</button>
+        <button type="submit" class="btn btn-success">Order</button>
     </form>
     @section Scripts {
     <script>

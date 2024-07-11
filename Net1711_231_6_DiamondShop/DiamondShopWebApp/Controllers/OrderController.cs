@@ -8,6 +8,7 @@ using System.Diagnostics;
 using DiamondShopData.Models;
 using System.Text;
 using DiamondShopData.ViewModel;
+using DiamondShopData.ViewModel.OrderDTO;
 
 namespace DiamondShopWebApp.Controllers
 {
@@ -26,33 +27,59 @@ namespace DiamondShopWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             HttpResponseMessage response = await client.GetAsync(ApiUrl + "GetAll");
-            string strData = await response.Content.ReadAsStringAsync();
-
-            JArray jsonArray = JArray.Parse(strData);
-            List<Order> items = jsonArray.Select(x => new Order
-            {
-                Id = (int)x["id"],
-                Status = (string)x["status"],
-                CreatedDate = DateOnly.FromDateTime((DateTime)x["createdDate"]),
-                TotalPrice = (long) x["totalPrice"]
-            }).ToList();
-            return View(items);
-        }
-        public async Task<IActionResult> Details(int id)
-        {
-            string detailsApiUrl = ApiUrl + id;
-            HttpResponseMessage response = await client.GetAsync(detailsApiUrl);
-
             if (response.IsSuccessStatusCode)
             {
                 string strData = await response.Content.ReadAsStringAsync();
-                Order order = JsonConvert.DeserializeObject<Order>(strData);
-                return View(order);
+                List<OrderDTO> orders = JsonConvert.DeserializeObject<List<OrderDTO>>(strData);
+                return View(orders);
             }
             else
             {
                 return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
             }
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            string detailsApiUrl = ApiUrl + $"GetOrderProduct{id}";
+            HttpResponseMessage response = await client.GetAsync(detailsApiUrl);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string strData = await response.Content.ReadAsStringAsync();
+                List<OrderProductDTO> orderProducts = JsonConvert.DeserializeObject<List<OrderProductDTO>>(strData);
+                return View(orderProducts);
+            }
+            else
+            {
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+            HttpResponseMessage response = await client.GetAsync(ApiUrl + id);
+            if (response.IsSuccessStatusCode)
+            {
+                string strData = await response.Content.ReadAsStringAsync();
+                OrderDTO order = JsonConvert.DeserializeObject<OrderDTO>(strData);
+                return View(order);
+            }
+            return NotFound();
+        }
+
+        // POST: Orders/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Status")] OrderDTO order)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(new { status = order.Status }), Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync($"{ApiUrl}{id}", content);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            ModelState.AddModelError(string.Empty, "An error occurred while updating the order status.");
+            return View(order);
         }
 
         [HttpPost]
