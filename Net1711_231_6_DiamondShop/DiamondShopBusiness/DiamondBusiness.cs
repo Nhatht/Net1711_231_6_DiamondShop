@@ -84,6 +84,7 @@ namespace DiamondShopBusiness
                 var diamond = new Diamond
                 {
                     Id = diamondDTO.Id,
+                    Name = diamondDTO.Name,
                     Origin = diamondDTO.Origin,
                     CaratWeight = diamondDTO.CaratWeight,
                     Color = diamondDTO.Color,
