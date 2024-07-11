@@ -139,7 +139,7 @@
                         html += '<td>' + item.address + '</td>';
                         html += '<td>' + item.role + '</td>';
                         html += '<td>' + item.isDeleted + '</td>';
-                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
+                        html += '<td><a href="#" onclick="return edit(\'' + item.id + '\')">Edit</a> | <a href="#" onclick="return view(\'' + item.id + '\')">View</a> | <a href="#" onclick="delele(\'' + item.id + '\')">Delete</a></td>';
                         html += '</tr>';
                     });
                     $('.tblCustomer').html(html);
@@ -275,6 +275,21 @@
             }
 
             $('#paginationControls').html(paginationHtml);
+        }
+        function view(id) {
+            $("#topUpModalContent").html("");
+            $("#topUpModalLabel").html(`View Customer [${id}]`);
+            $.ajax({
+                url: '@Url.Action("Edit", "Customers")' + '/' + id,
+                type: "GET",
+                success: function (result) {
+                    $("#topUpModalContent").html(result);
+                    $('#topUpModal').modal('show');
+                },
+                error: function (message) {
+                    alert(message);
+                }
+            });
         }
 
     </script>
